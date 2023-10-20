@@ -404,8 +404,8 @@
               {% for ri in recur_items %}
               <tr id='addr{{forloop.counter}}' class="addr">
                 <td style="width: 20%;">
-                  <div class="d-flex">
-                    <select name='item[]' id="item{{forloop.counter}}" class="form-control item text-dark bg-light" onchange = "showRate(this.id,this.value);">
+                  <div class="d-flex" >
+                    <select name='item[]' id="item{{forloop.counter0}}" class="form-control item text-dark bg-light" onchange = "showRate(this.id,this.value);">
                       <option value=" {{ ri.item }}" selected >{{ ri.item }}</option>
                       {% for i in item %}
                         <option value="{{i.id}}">{{ i.Name  }} </option>
@@ -418,146 +418,12 @@
                   <input type="text" value="{{ri.hsn}}" name='HSN[]' id="HSN0" placeholder='HSN' class="form-control HSN text-dark bg-light" />
                 </td>
 
-                <!-- <td  style="width: 20%;">
-                  <div class="d-flex">
-                    <select name='account[]' id="account{{forloop.counter0}}" class="form-control acnt text-dark bg-light">
-                      <option value=" {{ri.account}}" selected >{{ ri.account }}</option>
-                      <optgroup class=""label="Accounts Payable">
-                        <option value='Accounts Payable'>Accounts Payable</option>
-                      </optgroup>
-  
-                      <optgroup class="" label="Accounts Receivable">
-                        <option value='Accounts Receivable'>Accounts Receivable</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Other Current Asset">
-                        <option value='Advance Tax'>Advance Tax</option>
-                        <option value='Employee Advance'>Employee Advance</option>
-                        <option value='Prepaid Expences'>Prepaid Expences</option>
-                        <option value='GST TCS Receivable'>GST TCS Receivable</option>
-                        <option value='GST TDS Receivable'>GST TDS Receivable</option>
-                        <option value='Input Tax Credits'>Input Tax Credits</option>
-                        <option value='Input CGST'>Input CGST</option>
-                        <option value='Input IGST'>Input IGST</option>
-                        <option value='Input SGST'>Input SGST</option>
-                        <option value='Reverse Charge Input Tax but not Due'>Reverse Charge Input Tax but not Due</option>
-                        <option value='Sales to Customers(Cash)'>Sales to Customers(Cash)</option>
-                        <option value='TDS Receivable'>TDS Receivable</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Expence">
-                        <option value='Advertising and Marketing'>Advertising and Marketing</option>
-                        <option value='Automobile Expense'>Automobile Expense</option>
-                        <option value='Bad Debt'>Bad Debt</option>
-                        <option value='Bank Fees and Charges'>Bank Fees and Charges</option>
-                        <option value='Consultant Expense'>Consultant Expense</option>
-                        <option value='Credit Card Expense'>Credit Card Expense</option>
-                        <option value='IT and Internet Expenses'>IT and Internet Expenses</option>
-                        <option value='Janitorial Expences'>Janitorial Expences</option>
-                        <option value='Lodging'>Lodging</option>
-                        <option value='Meals and Entertainment'>Meals and Entertainment</option>
-                        <option value='Office Supplies'>Office Supplies</option>
-                        <option value=0>Other Expenses</option>
-                        <option value='Other Expenses'>Postage</option>
-                        <option value='Printing and Stationery'>Printing and Stationery</option>
-                        <option value='Rent Expense'>Rent Expense</option>
-                        <option value='Repair and Maintenance'>Repair and Maintenance</option>
-                        <option value='Salaries and Employee Wages'>Salaries and Employee Wages</option>
-                        <option value='Telephone Expense'>Telephone Expense</option>
-                        <option value='Travel Expense'>Travel Expense</option>
-                        <option value='Uncategorized'>Uncategorized</option>
-                        <option value='Contract Assets'>Contract Assets</option>
-                        <option value='Depreciation and Amortisation'>Depreciation and Amortisation</option>
-                        <option value='Merchandise'>Merchandise</option>
-                        <option value='Raw Materials and Consumables'>Raw Materials and Consumables</option>
-                        <option value='Transpotaion Expense'>Transpotaion Expense</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Cost of Goods Sold">
-                        <option value='Cost of Goods Sold'>Cost of Goods Sold</option>
-                        <option value='Job Costing'>Job Costing</option>
-                        <option value='Labor'>Labor</option>
-                        <option value='Materials'>Materials</option>
-                        <option value='Subcontractor'>Subcontractor</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Income">
-                        <option value='Discount'>Discount</option>
-                        <option value='General Income'>General Income</option>
-                        <option value='Interest Income'>Interest Income</option>
-                        <option value='Late Fee Income'>Late Fee Income</option>
-                        <option value='Other Charges'>Other Charges</option>
-                        <option value='Sales'>Sales</option>
-                        <option value='Shipping Charge'>Shipping Charge</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Equity">
-                        <option value='Drawings'>Drawings</option>
-                        <option value='Opening Balance Offset'>Opening Balance Offset</option>
-                        <option value="Owner's Equity">Owner's Equity</option>
-                        <option value='Retained Earnings'>Retained Earnings</option>
-                        <option value='Capital Stock'>Capital Stock</option>
-                        <option value='Distributions'>Distributions</option>
-                        <option value='Dividends Paid'>Dividends Paid</option>
-                        <option value='Investments'>Investments</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Other Current Liability">
-                        <option value='Employee Reimbursements'>Employee Reimbursements</option>
-                        <option value='Opening Balance Adjustments'>Opening Balance Adjustments</option>
-                        <option value='Tax Payable'>Tax Payable</option>
-                        <option value='Unearned Revenue'>Unearned Revenue</option>
-                        <option value='GST Payable'>GST Payable</option>
-                        <option value='Output CGST'>Output CGST</option>
-                        <option value='Output IGST'>Output IGST</option>
-                        <option value='Output SGST'>Output SGST</option>
-                        <option value='TDS Payable'>TDS Payable</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Other Expense">
-                        <option value='Exchange Gain or Loss'>Exchange Gain or Loss</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Fixed Asset">
-                        <option value='Furniture and Equipment'>Furniture and Equipment</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Stock">
-                        <option value='Inventory Asset'>Inventory Asset</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Cash">
-                        <option value='Petty Cash'>Petty Cash</option>
-                        <option value='Undeposited Funds'>Undeposited Funds</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Other Liability">
-                        <option value='Tag Adjustments'>Tag Adjustments</option>
-                      </optgroup>
-
-                      <optgroup class="" label="Long Term Liability">
-                        <option value='Construction Loans'>Construction Loans</option>
-                        <option value='Mortgages'>Mortgages</option>
-                      </optgroup>
-
-                      {% for ty in account_type %}
-                      <optgroup class="" label="{{ty.account_type}}">
-                        {% for i in account %}
-                          {% if ty.account_type == i.account_type %}
-                          <option value="{{ i.id }}">{{ i.account_name }} </option>
-                          {% endif %}
-                        {% endfor %}
-                      </optgroup>
-                      {% endfor %}
-                    </select>
-                  </div>  
-                </td> -->
-                
+               
                 <td style="width: 10%;">
-                  <input type="text" name='qty[]' placeholder='Qty' id="qty{{forloop.counter}}" value=" {{ri.quantity}} "  class="form-control qty text-dark bg-light" step=0 min=0/>
+                  <input type="text" name='qty[]' placeholder='Qty' id="qty{{forloop.counter0}}" value=" {{ri.quantity}} "  class="form-control qty text-dark bg-light" step=0 min=0/>
                 </td>
                 <td style="width: 10%;">
-                  <input type="text" name='rate[]' id="rate{{forloop.counter}}" placeholder='Rate' value=" {{ ri.rate }} " class="form-control rate text-dark bg-light" step="0.00" min="0" />
+                  <input type="text" name='rate[]' id="rate{{forloop.counter0}}" placeholder='Rate' value=" {{ ri.rate }} " class="form-control rate text-dark bg-light" step="0.00" min="0" />
                 </td>
                 <td style="width: 15%;">
                   <input type="hidden" id="tax_total0" class="form-control mb-2 d-none">
@@ -712,6 +578,14 @@
             <div class="col-sm-3 mt-2"></div>
             <div class="col-sm-4 mt-2"><input type="number" name='sgst' tep="0.00" min="0" id="sgst" placeholder=0 value="{{recur_bills.sgst}}"
                 class="form-control text-dark bg-light" readonly style="background-color: #2A3038;border: 1px solid #2c2e33;"/>
+            </div>
+          </div>
+
+          <div class="row container-fluid p-2 m-0" id="tax_amount">
+            <div class="col-sm-5 mt-2"><label for="a" class="text-center">Tax Amount</label></div>
+            <div class="col-sm-3 mt-2"></div>
+            <div class="col-sm-4 mt-2"><input type="number" id="total_taxamount" name="total_taxamount"step="0.00" min="0" placeholder=0 value="{{recur_bills.tax_amount}}"
+                class="total_taxamount form-control text-dark bg-light"  style="background-color: #2A3038;border: 1px solid #2c2e33;"/>
             </div>
           </div>
 
@@ -2487,22 +2361,23 @@ $(document).ready(function() {
               $('#cemail_inp').val(' '+ data.customer_email);
               $('#csrcofsupply').val(' '+ data.cust_place_supply);
               $('#cgst_trt_inp').val(' ' +data.gst_treatment);
+              $('#cgstin_inp').val(" " +data.cust_gstno);
               //srcofsupply();
               if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                 // $("#cgstin_row").removeClass('d-none');
                 // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(' '+ data.cust_gstno);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
                 // $("#cgstin_row").removeClass('d-none');
                 // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(' '+ data.cust_gstno);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 // $("#cgstin_row").removeClass('d-none');
                 // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(' '+ data.cust_gstno);
               }
               
               else{
@@ -2582,25 +2457,26 @@ debugger
               // $("#cgst_trt_row").removeClass('d-none');
               // $("#cgst_trt_row").addClass('d-flex');
               $('#cemail_inp').val(' '+ data.customer_email);
+              $('#csrcofsupply').val(' '+ data.cust_place_supply);
               $('#cgst_trt_inp').val(' ' +data.gst_treatment);
-              $('#csrcofsupply').val(' '+ data.cust_place_supply); 
+              $('#cgstin_inp').val(" " +data.cust_gstno);
               srcofsupply();
 
               if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                 // $("#cgstin_row").removeClass('d-none');
                 // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(' '+ data.cust_gstno);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
                 // $("#cgstin_row").removeClass('d-none');
                 // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(' '+ data.cust_gstno);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 // $("#cgstin_row").removeClass('d-none');
                 // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(' '+ data.cust_gstno);
               }
               
               else{
