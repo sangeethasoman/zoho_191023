@@ -2287,10 +2287,41 @@ function toggleDateInput() {
 
             success: function(data) {
 
+              $("#email_row").removeClass('d-none');
+                $("#email_row").addClass('d-flex');
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $("#gst_trt_row").removeClass('d-none');
+                $("#gst_trt_row").addClass('d-flex');
+
                 $('#email_inp').val(" " +data.vendor_email);
                 $('#gstin_inp').val(" " +data.gst_number);
                 $('#gst_trt_inp').val(" "+data.gst_treatment);
-                $("#srcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
+                $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
+                $('#cgstin_inp').val(' '+ data.gstin);
+                srcofsupply();
+                
+
+                if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $('#gstin_inp').val(' '+ data.gst_number);
+
+              }
+              else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $('#gstin_inp').val(' '+ data.gst_number);
+              }
+              else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $('#gstin_inp').val(' '+ data.gst_number);
+              }
+              
+              else{
+                $("#gstin_row").addClass('d-none');
+              }
 
             }
         });
@@ -2316,18 +2347,40 @@ $(document).ready(function() {
             type : 'POST',
 
             success: function(data) {
-                // $("#email_row").removeClass('d-none');
-                // $("#email_row").addClass('d-flex');
-                // $("#gstin_row").removeClass('d-none');
-                // $("#gstin_row").addClass('d-flex');
-                // $("#gst_trt_row").removeClass('d-none');
-                // $("#gst_trt_row").addClass('d-flex');
+                $("#email_row").removeClass('d-none');
+                $("#email_row").addClass('d-flex');
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $("#gst_trt_row").removeClass('d-none');
+                $("#gst_trt_row").addClass('d-flex');
 
                 $('#email_inp').val(" " +data.vendor_email);
                 $('#gstin_inp').val(" " +data.gst_number);
                 $('#gst_trt_inp').val(" "+data.gst_treatment);
-                $('#gst_trt_inp').val(" "+data.gst_treatment);
-                $("#srcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
+                $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
+                $('#cgstin_inp').val(' '+ data.gst_number);
+                srcofsupply();
+
+                if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
+                 $("#gstin_row").removeClass('d-none');
+                 $("#gstin_row").addClass('d-flex');
+                 $('#gstin_inp').val(' '+ data.gst_number);
+
+              }
+              else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $('#gstin_inp').val(' '+ data.gst_number);
+              }
+              else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
+                $("#gstin_row").removeClass('d-none');
+                $("#gstin_row").addClass('d-flex');
+                $('#gstin_inp').val(' '+ data.gst_number);
+              }
+              
+              else{
+                $("#gstin_row").addClass('d-none');
+              }
 
             }
         });
@@ -2337,60 +2390,61 @@ $(document).ready(function() {
 
 $(document).ready(function() {
 
-        var name = $("#customer").val();
-        var na = name.split(' ')[0];
-        $.ajax({
+var name = $("#customer").val();
+var na = name.split(' ')[0];
+$.ajax({
 
-            url: "{% url 'get_customerdet' %}", 
+    url: "{% url 'get_customerdet' %}", 
 
-            data: { 
-                    // name : na[1]+ " " + na[2] + " "+ na[3],
-                    id : na,
-                    csrfmiddlewaretoken: '{{ csrf_token }}' 
-                },
+    data: { 
+            // name : na[1]+ " " + na[2] + " "+ na[3],
+            id : na,
+            csrfmiddlewaretoken: '{{ csrf_token }}' 
+        },
 
-            type : 'POST',
+    type : 'POST',
 
-            success: function(data) {
-              console.log('na');
-              // $("#cemail_row").removeClass('d-none');
-              // $("#cemail_row").addClass('d-flex');
-              
-              // $("#cgst_trt_row").removeClass('d-none');
-              // $("#cgst_trt_row").addClass('d-flex');
-              $('#cemail_inp').val(' '+ data.customer_email);
-              $('#csrcofsupply').val(' '+ data.cust_place_supply);
-              $('#cgst_trt_inp').val(' ' +data.gst_treatment);
-              $('#cgstin_inp').val(" " +data.cust_gstno);
-              //srcofsupply();
-              if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
-                // $("#cgstin_row").removeClass('d-none');
-                // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.cust_gstno);
+    success: function(data) {
+      console.log('na');
+      $("#cemail_row").removeClass('d-none');
+      $("#cemail_row").addClass('d-flex');
+      
+      $("#cgst_trt_row").removeClass('d-none');
+      $("#cgst_trt_row").addClass('d-flex');
+      $('#cemail_inp').val(' '+ data.customer_email);
+      $('#csrcofsupply').val(' '+ data.cust_place_supply);
+      $('#cgst_trt_inp').val(' ' +data.gst_treatment);
+      $('#cgstin_inp').val(' '+ data.gstin);
+      
+      srcofsupply();
+      if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
+        $("#cgstin_row").removeClass('d-none');
+        $("#cgstin_row").addClass('d-flex');
+        $('#cgstin_inp').val(' '+ data.gstin);
 
-              }
-              else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
-                // $("#cgstin_row").removeClass('d-none');
-                // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.cust_gstno);
-              }
-              else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
-                // $("#cgstin_row").removeClass('d-none');
-                // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.cust_gstno);
-              }
-              
-              else{
-                $("#cgstin_row").addClass('d-none');
-              }
+      }
+      else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
+        $("#cgstin_row").removeClass('d-none');
+        $("#cgstin_row").addClass('d-flex');
+        $('#cgstin_inp').val(' '+ data.gstin);
+      }
+      else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
+        $("#cgstin_row").removeClass('d-none');
+        $("#cgstin_row").addClass('d-flex');
+        $('#cgstin_inp').val(' '+ data.gstin);
+      }
+      
+      else{
+        $("#cgstin_row").addClass('d-none');
+      }
 
-                // gst or igst in tax
+        // gst or igst in tax
 
-              $("#cust_state").val(data.state);
-              
-            }
-            
-        });
+      $("#cust_state").val(data.state);
+      
+    }
+    
+});
 
 });
 
@@ -2451,32 +2505,33 @@ $(document).ready(function() {
 
             success: function(data) {
 debugger
-              // $("#cemail_row").removeClass('d-none');
-              // $("#cemail_row").addClass('d-flex');
+              $("#cemail_row").removeClass('d-none');
+              $("#cemail_row").addClass('d-flex');
               
-              // $("#cgst_trt_row").removeClass('d-none');
-              // $("#cgst_trt_row").addClass('d-flex');
+              $("#cgst_trt_row").removeClass('d-none');
+              $("#cgst_trt_row").addClass('d-flex');
               $('#cemail_inp').val(' '+ data.customer_email);
               $('#csrcofsupply').val(' '+ data.cust_place_supply);
               $('#cgst_trt_inp').val(' ' +data.gst_treatment);
-              $('#cgstin_inp').val(" " +data.cust_gstno);
+              $('#cgstin_inp').val(' '+ data.gstin);
+             
               srcofsupply();
 
               if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
-                // $("#cgstin_row").removeClass('d-none');
-                // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.cust_gstno);
+                $("#cgstin_row").removeClass('d-none');
+                $("#cgstin_row").addClass('d-flex');
+                $('#cgstin_inp').val(' '+ data.gstin);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
-                // $("#cgstin_row").removeClass('d-none');
-                // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.cust_gstno);
+                $("#cgstin_row").removeClass('d-none');
+                $("#cgstin_row").addClass('d-flex');
+                $('#cgstin_inp').val(' '+ data.gstin);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
-                // $("#cgstin_row").removeClass('d-none');
-                // $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.cust_gstno);
+                $("#cgstin_row").removeClass('d-none');
+                $("#cgstin_row").addClass('d-flex');
+                $('#cgstin_inp').val(' '+ data.gstin);
               }
               
               else{

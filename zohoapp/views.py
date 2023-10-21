@@ -5694,8 +5694,9 @@ def get_vendordet(request):
     vemail = vdr.vendor_email
     gstnum = vdr.gst_number
     gsttr = vdr.gst_treatment
+    source_supply = vdr.source_supply
 
-    return JsonResponse({'vendor_email' :vemail, 'gst_number' : gstnum,'gst_treatment':gsttr},safe=False)
+    return JsonResponse({'vendor_email' :vemail, 'gst_number' : gstnum,'gst_treatment':gsttr,'source_supply':source_supply},safe=False)
 
 @login_required(login_url='login')
 def get_customerdet(request):
@@ -5706,17 +5707,14 @@ def get_customerdet(request):
     email = cust.customerEmail
     cust_id=id
     cust_place_supply=cust.placeofsupply
-    cust_gst_treat=cust.GSTTreatment
-    cust_gstno=cust.GSTIN
-    
-    gstin = 0
+    gstin = cust.GSTIN
     gsttr = cust.GSTTreatment
     cstate = cust.placeofsupply.split("] ")[1:]
     print(email)
     print(gstin)
     print(id)
     state = 'Not Specified' if cstate == "" else cstate
-    return JsonResponse({'customer_email' :email, 'gst_treatment':gsttr, 'gstin': gstin , 'state' : state,'cust_id':cust_id,'cust_place_supply':cust_place_supply,'cust_gst_treat':cust_gst_treat,'cust_gstno':cust_gstno},safe=False)
+    return JsonResponse({'customer_email' :email, 'gst_treatment':gsttr, 'gstin': gstin , 'state' : state,'cust_id':cust_id,'cust_place_supply':cust_place_supply},safe=False)
 
 @login_required(login_url='login')
 def recurbills_vendor(request):

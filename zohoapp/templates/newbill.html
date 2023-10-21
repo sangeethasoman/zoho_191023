@@ -2442,7 +2442,10 @@
 
                     $("#cgst_trt_row").removeClass('d-none');
                     $("#cgst_trt_row").addClass('d-flex');
-
+                    $("#pos").removeClass('d-none');
+                    $("#pos").addClass('d-flex');
+                    $("#customer_email").removeClass('d-none');
+                    $("#customer_email").addClass('d-flex');
                     $("#cgstin_row").removeClass('d-none');
                     $("#cgstin_row").addClass('d-flex');
 
@@ -2450,6 +2453,32 @@
                     document.getElementById('pos').value = pos
                     document.getElementById('c_gsttype').value = gst_treatment
                     document.getElementById('cgstin_inp').value = gst_number
+                    if( response.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
+                $("#cgstin_row").removeClass('d-none');
+                $("#cgstin_row").addClass('d-flex');
+                $('#cgstin_inp').val(' '+ response.gst_number)
+              }
+              else if( response.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
+                $("#cgstin_row").removeClass('d-none');
+                $("#cgstin_row").addClass('d-flex');
+                $('#cgstin_inp').val(' '+ response.gst_number)  
+              }
+              else if( response.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
+                $("#cgstin_row").removeClass('d-none');
+                $("#cgstin_row").addClass('d-flex');
+                $('#cgstin_inp').val(' '+ response.gst_number)
+              }
+              
+              else{
+                $("#cgstin_row").addClass('d-none');
+              }
+
+                // gst or igst in tax
+
+              $("#cust_state").val(response.state);
+
+                
+                    
 
                 }
 
@@ -2484,12 +2513,35 @@
                     $("#gstin_row").addClass('d-flex');
                     $("#sos_row").removeClass('d-none');
                     $("#sos_row").addClass('d-flex');
+                    $("#vendor_email").removeClass('d-none');
+                    $("#vendor_email").addClass('d-flex');
 
 
                     document.getElementById('vendor_email').value = email
                     document.getElementById('sos').value = sos
                     document.getElementById('gstin_inp').value = gst_number
                     document.getElementById('v_gsttype').value = gst_treatment
+
+                    if( response.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
+                      $("#gstin_row").removeClass('d-none');
+                      $("#gstin_row").addClass('d-flex');
+                      $('#gstin_inp').val(' '+ response.gst_number)
+                    }
+                    else if( response.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
+                      $("#gstin_row").removeClass('d-none');
+                      $("#gstin_row").addClass('d-flex');
+                      $('#gstin_inp').val(' '+ response.gst_number)  
+                    }
+                    else if( response.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
+                      $("#gstin_row").removeClass('d-none');
+                      $("#gstin_row").addClass('d-flex');
+                      $('#gstin_inp').val(' '+ response.gst_number)
+                    }
+              
+                    else{
+                     $("#gstin_row").addClass('d-none');
+              }
+
 
                 }
 
