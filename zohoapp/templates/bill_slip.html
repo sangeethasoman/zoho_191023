@@ -187,9 +187,9 @@
                 <input type="text" class="form-control text-dark bg-white" id="search" placeholder="search..." style="width: 150px;">&nbsp;
                 
                 <a class="btn text-center px-4 pt-2 btn-outline-warning" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                role="button" style="width: 1%;"><i class="fa fa-sort"></i>
+                role="button" style="width: 15%;"><i class="fa fa-sort"></i>
                 </a>
-                <div class="dropdown-menu" style="z-index: 1;">
+                <div class="dropdown-menu" style="z-index: 10;">
                     <a class="dropdown-item dropdown-sort" href="{% url 'bill_view' bill.id %}">All</a>
                     <a class="dropdown-item dropdown-sort" href="{% url 'billno_purchase_sort' bill.id %}">Bill No:</a>
                     <a class="dropdown-item dropdown-sort" href="{% url 'vendor_purchase_sort' bill.id %}">Vendor</a>
@@ -198,9 +198,9 @@
                 
                
                     <a class="btn text-center px-4 pt-2 btn-outline-warning" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                    role="button" style="width: 1%;"><i class="fa fa-filter"></i>
+                    role="button" style="width: 15%;"><i class="fa fa-filter"></i>
                     </a>
-                    <div class="dropdown-menu" style="z-index: 1;">
+                    <div class="dropdown-menu" style="z-index: 10;">
                         <a class="dropdown-item dropdown-filter" href="{% url 'bill_view' bill.id %}">All</a>
                         <a class="dropdown-item dropdown-filter" href="{% url 'purchase_bill_save' bill.id %}">Save</a>
                         <a class="dropdown-item dropdown-filter" href="{% url 'purchase_bill_draft' bill.id %}">Draft</a>
@@ -277,15 +277,15 @@
 
             <div class="col-md-6 text-white my-auto " style="text-align: right;">
             
-                    <a href="{% url 'covert_to_purchase_bills' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);"
+                    <a href="{% url 'covert_to_purchase_bills' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26); width: 10%;"
                     data-toggle="tooltip" data-placement="top" title="Convert">
                     <i class="fas fa-arrows-alt-h" ></i></a>
                        
-                    <a href="#" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);"
+                    <a href="#" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);  width: 10%;"
                     data-toggle="modal" data-target="#cmnts" >
                         <i class="fas fa-comment" data-toggle="tooltip" 
                         title="Add/Edit Comment"></i></a>
-                    <a href="{% url 'edit_bill' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);"
+                    <a href="{% url 'edit_bill' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);  width: 10%;"
                         data-toggle="tooltip" data-placement="top" title="Edit">
                         <i class="fas fa-pencil-alt" ></i></a>
                     <a href="" class="btn btn-sm text-white btn_print" style="background-color:  rgb(217, 156, 26);"
@@ -295,26 +295,26 @@
                         data-toggle="tooltip" title="Print" onclick="printDiv()">
                         <i class="fa fa-print"></i></a>
                     <a href="{% url 'emailattachment_cust' %}" class="btn btn-sm text-white"
-                        style="background-color:  rgb(217, 156, 26);" data-toggle="tooltip" title="Email">
+                        style="background-color:  rgb(217, 156, 26);  width: 10%;" data-toggle="tooltip" title="Email">
                         <i class="fa fa-envelope"></i></a>
                 <!-- </div> -->
 
                 {% if bill.attachment %}
                 <a download href="{{bill.attachment.url}}" class="btn btn-sm text-white"
-                    style="background-color:  rgb(217, 156, 26);" data-toggle="tooltip" 
+                    style="background-color:  rgb(217, 156, 26);  width: 10%;" data-toggle="tooltip" 
                     title="Download">
                     <i class="fas fa-download"></i></a>
                 <!-- <div style="padding: 10px; cursor: pointer;" data-toggle="tooltip" data-placement="top" title="Download">
                         <a download  href="{{bill.attachment.url}}"><i class="fas fa-download"></i></a>
                     </div> -->
                 {% else %}
-                <a href="#" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);"
+                <a href="#" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);  width: 10%;"
                     data-toggle="modal" data-target="#attachModal" data-inv-id="{{ bill.id }}">
                     <i class="fas fa-paperclip" data-toggle="tooltip" 
                     title="Attach File"></i></a>
                 
                 {% endif %}
-                <a href="{% url 'delete_bill' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);"
+                <a href="{% url 'delete_bill' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26);  width: 10%;"
                     onclick="return confirm('Do you want to Delete this Bill?');"><i
                         class="fas fa-trash-alt" data-toggle="tooltip" 
                         title="Delete"></i></a>
@@ -370,15 +370,15 @@
                                         <h6 class="p-2" for="">Adjustment &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.adjustment|floatformat:3}}</h6>
                                         {% endif %}
                                         <h6 class="p-2" for="">Total &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.total|floatformat:3}}</h6>
-                                        <h6 class="p-2" for="">Paid &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.amt_paid|floatformat:3}}</h6>
-                                        <h6 class="p-2" for="">Balance &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.balance|floatformat:3}}</h6>
+                                        <!-- <h6 class="p-2" for="">Paid &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.amt_paid|floatformat:3}}</h6>
+                                        <h6 class="p-2" for="">Balance &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.balance|floatformat:3}}</h6> -->
                                     </div>
                                 </div>
                             </div>
                             
                         </div>
                         <div class="tab-pane fade  show active" id="template" role="tabpanel" aria-labelledby="profile-tab">
-                            <div class="slip m-3 p-5  bg-light" id="whatToPrint" style="overflow-x: auto;"
+                            <div class="slip m-3 p-5  bg-light" id="whatToPrint" 
                                 style="box-shadow: 5px 5px 10px rgb(45, 45, 45);">
                                 <div class="ribbon">{{ bill.status }}</div>
                                 <div class="row ">
@@ -483,7 +483,7 @@
                                         <td class="text-right text-dark">Total:</td>
                                         <td class="text-right text-dark">{{ bill.total|floatformat:2}}</td>
                                     </tr>
-                                    <tr style="text-align: right;">
+                                    <!-- <tr style="text-align: right;">
 
                                         <td class="text-right text-dark">Paid:</td>
                                         <td class="text-right text-dark">{{ bill.amt_paid|floatformat:2}}</td>
@@ -492,7 +492,7 @@
 
                                         <td class="text-right text-dark">Balance:</td>
                                         <td class="text-right text-dark">{{ bill.balance|floatformat:2}}</td>
-                                    </tr>
+                                    </tr> -->
 
                                 </table>
 

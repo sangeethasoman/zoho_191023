@@ -491,46 +491,10 @@
           
               <option value="Cash">Cash</option>
               <option value="Cheque">Cheque</option>
-              <optgroup label="BankName">Bank Name</optgroup>
-              <option value="not applicable">Not applicable</option> 
-              <option value="ALLAHABAD BANK">ALLAHABAD BANK </option>
-              <option value="ANDHRA BANK">ANDHRA BANK</option>
-              <option value="AXIS BANK">AXIS BANK</option>
-              <option value="STATE BANK OF INDIA">STATE BANK OF INDIA</option>
-              <option value="BANK OF BARODA">BANK OF BARODA</option>
-              <option value="UCO BANK">UCO BANK</option>
-              <option value="UNION BANK OF INDIA">UNION BANK OF INDIA</option>
-              <option value="BANK OF INDIA">BANK OF INDIA</option>
-              <option value="BANDHAN BANK LIMITED">BANDHAN BANK LIMITED</option>
-              <option value="CANARA BANK">CANARA BANK</option>
-              <option value="GRAMIN VIKASH BANK">GRAMIN VIKASH BANK</option>
-              <option value="CORPORATION BANK">CORPORATION BANK</option>
-              <option value="INDIAN BANK">INDIAN BANK</option>
-              <option value="INDIAN OVERSEAS BANK">INDIAN OVERSEAS BANK</option>
-              <option value="ORIENTAL BANK OF COMMERCE">ORIENTAL BANK OF COMMERCE</option>
-              <option value="PUNJAB AND SIND BANK">PUNJAB AND SIND BANK</option>
-              <option value="PUNJAB NATIONAL BANK">PUNJAB NATIONAL BANK</option>
-              <option value="RESERVE BANK OF INDIA">RESERVE BANK OF INDIA</option>
-              
-              <option value="UNITED BANK OF INDIA">UNITED BANK OF INDIA</option>
-              <option value="CENTRAL BANK OF INDIA">CENTRAL BANK OF INDIA</option>
-              <option value="VIJAYA BANK">VIJAYA BANK</option>
-              <option value="DENA BANK">DENA BANK</option>
-              <option value="BHARATIYA MAHILA BANK LIMITED">BHARATIYA MAHILA BANK LIMITED</option>
-              <option value="FEDERAL BANK LTD">FEDERAL BANK LTD </option>
-              <option value="HDFC BANK LTD">HDFC BANK LTD</option>
-              <option value="ICICI BANK LTD">ICICI BANK LTD</option>
-              <option value="IDBI BANK LTD">IDBI BANK LTD</option>
-              <option value="PAYTM BANK">PAYTM BANK</option>
-              <option value="FINO PAYMENT BANK">FINO PAYMENT BANK</option>
-              <option value="INDUSIND BANK LTD">INDUSIND BANK LTD</option>
-              <option value="KARNATAKA BANK LTD">KARNATAKA BANK LTD</option>
-              <option value="KOTAK MAHINDRA BANK">KOTAK MAHINDRA BANK</option>
-              <option value="YES BANK LTD">YES BANK LTD</option>
-              <option value="SYNDICATE BANK">SYNDICATE BANK</option>
-              <option value="BANK OF INDIA">BANK OF INDIA</option>
-              <option value="BANK OF MAHARASHTRA">BANK OF MAHARASHTRA</option>
-             
+              {% for b in bank %}
+                  <option value="{{b.name}}">{{b.name}}</option>
+              {% endfor %}
+
           </select>
           </div>
         </div>
@@ -631,8 +595,8 @@
         
         <div class="col-md-4">
           <div class="d-flex">
-            <input type="submit" class="btn text-white mt-5" style="background-color:  rgb(59, 59, 58) ; "
-            onclick="saveAsDraftDialog()" value="Save As Draft"> &nbsp;
+            <!-- <input type="submit" class="btn text-white mt-5" style="background-color:  rgb(59, 59, 58) ; "
+            onclick="saveAsDraftDialog()" value="Save As Draft"> &nbsp; -->
         <input type="submit" class="btn text-white mt-5" style="background-color: rgb(210, 132, 30) ; "
             onclick="saveAndOpenDialog()" value="SAVE CHANGES"> &nbsp;
         <input type="submit" class="btn text-white mt-5" style="background-color:  rgb(59, 59, 58) ; "
@@ -2298,7 +2262,7 @@ function toggleDateInput() {
                 $('#gstin_inp').val(" " +data.gst_number);
                 $('#gst_trt_inp').val(" "+data.gst_treatment);
                 $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#gstin_inp').val(' '+ data.gstin);
                 srcofsupply();
                 
 
@@ -2358,7 +2322,7 @@ $(document).ready(function() {
                 $('#gstin_inp').val(" " +data.gst_number);
                 $('#gst_trt_inp').val(" "+data.gst_treatment);
                 $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
-                $('#cgstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(' '+ data.gst_number);
                 srcofsupply();
 
                 if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){

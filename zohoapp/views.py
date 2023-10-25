@@ -5173,6 +5173,7 @@ def add_recurring_bills(request):
     purchase = Purchase.objects.all()
     sales_type = set(Sales.objects.values_list('Account_type', flat=True))
     purchase_type = set(Purchase.objects.values_list('Account_type', flat=True))
+    bank=Bankcreation.objects.all()
     last_id = recurring_bills.objects.filter(user_id=request.user.id).order_by('-id').values('id').first()
     print(last_id)
     if last_id !=  None:
@@ -5198,6 +5199,8 @@ def add_recurring_bills(request):
         'sales_type': sales_type,
         'purchase_type': purchase_type,
         'b_no': next_no,
+        'bank':bank,
+
     }
 
     return render(request, 'add_recurring_bills.html', context)
@@ -5322,7 +5325,9 @@ def edit_recurring_bills(request,id):
     recur_item = recurring_bills_items.objects.filter(user = request.user,recur_bills = id) 
     c = customer.objects.filter(user = request.user).get(id = recur_bills.customer_name.split(' ')[0])
     v = vendor_table.objects.filter(user = request.user).get(id = recur_bills.vendor_name.split(" ")[0])
-    # print(recur_bills.customer_name.split(" ")[2:])
+    bank=Bankcreation.objects.all()
+
+    
     context = {
         'company' : company,
         'vendor' : vendor,
@@ -5342,7 +5347,9 @@ def edit_recurring_bills(request,id):
         'vend' : v,
         'id': id,
         'vend_name' : " ".join(recur_bills.vendor_name.split(" ")[1:]),
-        'cust_name' : " ".join(recur_bills.customer_name.split(" ")[2:])
+        'cust_name' : " ".join(recur_bills.customer_name.split(" ")[2:]),
+        'bank':bank,
+        
     }
 
     return render(request,'edit_recurring_bills.html',context)
@@ -10140,6 +10147,8 @@ def view_bills(request):
     user = request.user
     bills = PurchaseBills.objects.filter(user=user).order_by('-id')
     company = company_details.objects.get(user=user)
+    
+
     pickup_records = []
     for bill in bills:
         record = {"bill_date":str(bill.bill_date),"bill_no":str(bill.bill_no),"customer_name":bill.customer_name,"vendor_name":bill.vendor_name,"status":bill.status,"total":bill.total,"id":bill.id,"balance":str(bill.balance)}
@@ -10148,6 +10157,8 @@ def view_bills(request):
     context = {
         'bills': pickup_records,
         'company': company,
+        
+
     }
 
     return render(request, 'viewbills.html', context)
@@ -10165,6 +10176,7 @@ def new_bill(request):
     account_types = Chart_of_Account.objects.values_list('account_type', flat=True).distinct()
     sales_acc = Sales.objects.all()
     pur_acc = Purchase.objects.all()
+    bank=Bankcreation.objects.all()
     last_id = PurchaseBills.objects.filter(user_id=user.id).order_by('-id').values('id').first()
     if last_id:
         last_id = last_id['id']
@@ -10182,6 +10194,7 @@ def new_bill(request):
                'acc_types':account_types,
                's_acc': sales_acc,
                'p_acc': pur_acc,
+               'bank':bank,
                }
 
     return render(request, 'newbill.html',context)
@@ -10593,6 +10606,8 @@ def edit_bill(request,bill_id):
     account_types = Chart_of_Account.objects.values_list('account_type', flat=True).distinct()
     sales_acc = Sales.objects.all()
     pur_acc = Purchase.objects.all()
+    bank=Bankcreation.objects.all()
+
     last_id = PurchaseBills.objects.filter(user_id=user.id).order_by('-id').values('id').first()
     if last_id:
         last_id = last_id['id']
@@ -10614,6 +10629,7 @@ def edit_bill(request,bill_id):
         'p_acc': pur_acc,
         'units': units,
         'id': bill_id,
+        'bank':bank,
         
     }
     return render(request, 'edit_bill.html', context)
@@ -17074,8 +17090,7 @@ def covert_to_recurring_bills(request, id):
     
     if r_bill.status == 'Draft':
         r_bill.status = 'Save'
-    elif r_bill.status == 'Save':
-        r_bill.status = 'Draft'
+    
     r_bill.save()  
     
     return redirect('view_recurring_bills', id)
@@ -17275,8 +17290,7 @@ def covert_to_purchase_bills(request, id):
     
     if purchase_bill.status == 'Draft':
         purchase_bill.status = 'Save'
-    elif purchase_bill.status == 'Save':
-        purchase_bill.status = 'Draft'
+    
     purchase_bill.save()  
     
     return redirect('bill_view', id)
