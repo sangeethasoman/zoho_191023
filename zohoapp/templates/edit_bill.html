@@ -247,7 +247,7 @@ else{
               </div>
           </div>
             
-            <div class="row mb-4" >
+            <div class="row mb-4" id="gstin_row">
               <div class="col-sm-2"><label for="gstin_inp">GST Number</div>
               <div class="col-sm-10"><input type="text" id="gstin_inp" name="gstin_inp" class="form-control bg-white text-dark"
                       style="width: 50%;" value="{{bill.gstin_inp}}">
@@ -315,7 +315,7 @@ else{
                        
                         <option value="30">Net 30</option>
                         
-                        <option value="30">Net 60</option>
+                        <option value="60">Net 60</option>
                         <option value="0">Due On Receipt</option>
                         {% for t in terms %}
                         <option value="{{t.Days}}">{{t.Terms}}</option>
@@ -426,8 +426,8 @@ else{
                                 </select></div>
                         </td>
                        
-                        <td class='text-right'><input  type="text" value="{{item.hsn}}"  name='HSN[]' id="HSN{{ forloop.counter }}" placeholder='HSN' style="width: 80px;" 
-                          class='bg-transparent border-0 text-black text-right qty' style="width: 50px;">
+                        <td class='text-right'><input  type="number" value="{{item.hsn}}"  name='HSN[]' id="HSN{{ forloop.counter }}" placeholder='HSN' style="width: 80px;" 
+                          class='bg-transparent border-0 text-black text-right HSN' style="width: 50px;">
                         </td>
                       
                         <td class='text-right'><input type='number' id='qty{{ forloop.counter }}' style="width: 50px;"
@@ -2529,7 +2529,7 @@ $(document).ready(function () {
                         </select></div>
                 </td>
                 <td class='text-right'><input type='number' id='HSN${RowCount}'
-                        class='bg-transparent border-0 text-black text-right HSN' name='HSN[]' style="width: 50px;" value='0' min="0"></td>
+                  class='bg-transparent border-0 text-black text-right HSN' name='HSN[]' style="width: 50px;" value='0' min="0"></td>
                 
                 <td class='text-right'><input type='number' id='qty${RowCount}' style="width: 50px;"
                         class='bg-transparent border-0 text-black text-right qty' name='quantity[]' value='0' >
@@ -2564,7 +2564,7 @@ $(document).ready(function () {
                             </td>
 
                     <td class='text-right'><input type='number' id='discount${RowCount}' style="width: 50px;"
-                        class='bg-transparent border-0 text-black text-right discount' name='discount[]' value='0.0' min="0"></td>
+                      class='bg-transparent border-0 text-black text-right discount' name='discount[]' value='0.0' min="0"></td>
                 <td class='text-right'><input type='number' id='amount${RowCount}' style="width: 80px;"
                         class='bg-transparent border-0 text-black text-right amount' name='amount[]' value='0.00'></td>
                 <td class='text-center'><button type='button' id='copy_btn${RowCount}'
@@ -2588,7 +2588,7 @@ $(document).ready(function () {
 
             // Get the values from the current row
             var currentItem = $(this).closest('tr').find("select[name='item[]']").val();
-            var currentHSN = $(this).closest('tr').find("select[name='HSN[]']").val();
+            var currentHSN = $(this).closest('tr').find("input[name='HSN[]']").val();
             
             var currentQuantity = $(this).closest('tr').find("input[name='quantity[]']").val();
             var currentRate = $(this).closest('tr').find("input[name='rate[]']").val();
@@ -2619,7 +2619,7 @@ $(document).ready(function () {
                         </select></div>
                 </td>debugger
                 <td style="width: 50%;">
-                        <input type='number' id='HSN${RowCount}' value="${currentHSN} 
+                        <input type='number' id='HSN${RowCount}' value="${currentHSN}" 
                         class='bg-transparent border-0 text-black text-right HSN' name='HSN[]' style="width: 50px;" value='0' min="0">
                 </td>
                 
@@ -2655,8 +2655,8 @@ $(document).ready(function () {
                 <td style="display: none;">
                     <input type="text" name='taxamount[]' id="taxamount${RowCount}" class="form-control taxamount" value="${currentTaxAmount}"/>
                             </td>
-                            <td class='text-right'><input type='number' id='discount${RowCount}' value="${currentDiscount}
-                        class='bg-transparent border-0 text-black text-right discount' name='discount[]' style="width: 50px;" value='0.0'></td>
+                            <td class='text-right'><input type='number' id='discount${RowCount}' value="${currentDiscount}"
+                              class='bg-transparent border-0 text-black text-right discount' name='discount[]' style="width: 50px;" value='0.0'></td>
                 <td class='text-right'><input type='number' id='amount${RowCount}' value="${currentAmount}"
                         class='bg-transparent border-0 text-black text-right amount' name='amount[]'style="width: 80px;" value='0.00'></td>
                 <td class='text-center'><button type='button' id='copy_btn${RowCount}'
@@ -4448,7 +4448,7 @@ $.ajax({
         
         if (checkbox.checked) {
             dateInput.disabled = true;
-           
+            $('#due_date').val("");
             $("#p_terms").val("recpt");
         } 
         else {

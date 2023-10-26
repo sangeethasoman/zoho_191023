@@ -277,7 +277,7 @@
 
             <div class="col-md-6 text-white my-auto " style="text-align: right;">
             
-                    <a href="{% url 'covert_to_purchase_bills' bill.id %}" class="btn btn-sm text-white" style="background-color:  rgb(217, 156, 26); width: 10%;"
+                    <a href="{% url 'covert_to_purchase_bills' bill.id %}" class="btn btn-sm text-white convert" style="background-color:  rgb(217, 156, 26); width: 10%;"
                     data-toggle="tooltip" data-placement="top" title="Convert">
                     <i class="fas fa-arrows-alt-h" ></i></a>
                        
@@ -753,6 +753,18 @@ $(document).ready(function() {
     });
   });
 });
+</script>
+
+<script>
+    $(document).ready(function() {
+        let status = '{{ bill.status }}'
+        if(status == 'Save'){
+            $('.convert').hide()
+        }
+        else{
+            $('.convert').show()
+        }
+    });
 </script>
 
 {% endblock %}

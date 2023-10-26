@@ -742,7 +742,7 @@
 
                 </div>
             </div>
-
+               
             <input type="submit" class="btn text-white mt-5" style="background-color:  rgb(59, 59, 58) ; "
                 onclick="saveAsDraftDialog()" value="Save As Draft">
             <input type="submit" class="btn text-white mt-5" style="background-color: rgb(210, 132, 30) ; "
@@ -2618,10 +2618,10 @@
             var table = document.getElementById("item_table");
             var RowCount = table.rows.length;
             // console.log(RowCount);
-
+debugger
             // Get the values from the current row
             var currentItem = $(this).closest('tr').find("select[name='item[]']").val();
-            var currentHSN = $(this).closest('tr').find("select[name='HSN[]']").val();
+            var currentHSN = $(this).closest('tr').find("input[name='HSN[]']").val();
             
             var currentQuantity = $(this).closest('tr').find("input[name='quantity[]']").val();
             var currentRate = $(this).closest('tr').find("input[name='rate[]']").val();
@@ -2652,7 +2652,7 @@
                         </select></div>
                 </td>
                 <td style="width: 50%;">
-                  ${currentHSN}
+                  
                   <input type='number' id='HSN${RowCount}' value="${currentHSN}"
                         class='bg-transparent border-0 text-black text-right HSN' name='HSN[]' style= "width:50px" value='0' min="0">
                 </td>
@@ -4527,7 +4527,7 @@ function toggleDateInput() {
       
       if (checkbox.checked) {
           dateInput.disabled = true;
-         
+          $('#due_date').val("");
           $("#p_terms").val("recpt");
       } 
       else {

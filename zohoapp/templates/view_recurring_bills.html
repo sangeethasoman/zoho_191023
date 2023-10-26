@@ -357,7 +357,7 @@
                     
 
                     
-                    <a href="{% url 'covert_to_recurring_bills' recur_bill.id %}" class=" fa fa-arrows-h btns px-2 py-2"
+                    <a href="{% url 'covert_to_recurring_bills' recur_bill.id %}" class=" fa fa-arrows-h btns px-2 py-2 convert"
                     data-toggle="tooltip" title="CONVERT" > </a>&nbsp;
                     <a href="" class=" far fa-comment-alt btns px-2 py-2" title="COMMENTS"
                     data-toggle="modal" data-target="#cmnts"> </a>&nbsp;
@@ -1189,7 +1189,17 @@ $(document).ready(function () {
 
     
 </script>
-
+<script>
+    $(document).ready(function() {
+        let status = '{{ recur_bill.status }}'
+        if(status == 'Save'){
+            $('.convert').hide()
+        }
+        else{
+            $('.convert').show()
+        }
+    });
+</script>
 
 
 

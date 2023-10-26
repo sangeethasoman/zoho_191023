@@ -5167,7 +5167,7 @@ def add_recurring_bills(request):
     acnt_type = Chart_of_Account.objects.filter(user=request.user).values('account_type').distinct()
     cust = customer.objects.filter(user=request.user)
     item = AddItem.objects.filter(user=request.user)
-    payments = payment_terms.objects.filter(user=request.user)
+    payments = payment_terms.objects.exclude(Days__isnull=True).filter(user_id=request.user.id)
     units = Unit.objects.all()
     sales = Sales.objects.all()
     purchase = Purchase.objects.all()
@@ -5270,7 +5270,7 @@ def create_recurring_bills(request):
             r_bill.save()
 
         items = request.POST.getlist("item[]")
-        accounts = request.POST.getlist("account[]")
+        
         quantity = request.POST.getlist("qty[]")
         rate = request.POST.getlist("rate[]")
         
@@ -5283,24 +5283,19 @@ def create_recurring_bills(request):
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
 
-        if len(items)==len(accounts)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and accounts and quantity and rate and tax and discount and amount and hsn:
+        if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and  quantity and rate and tax and discount and amount and hsn:
                 
-                mapped=zip(items,accounts,quantity,rate,tax,discount,amount,hsn)
+                mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
                 mapped=list(mapped)
 
-                for ele in mapped:
+        for ele in mapped:
 
-                    it = AddItem.objects.get(user = request.user, id = ele[0]).Name
-                    try:
-                        int(ele[1])
-                        ac = Chart_of_Account.objects.get(user = request.user,id = ele[1]).account_name
-                        
-                    except ValueError:
-                        
-                        ac = ele[1]
-                    
-                    created = recurring_bills_items.objects.create(item = it,account = ac,quantity=ele[2],rate=ele[3],
-                    tax=ele[4],discount = ele[5],amount=ele[6],hsn=ele[7], user = u,company = company, recur_bills = r_bill)
+            it = AddItem.objects.get(user = request.user, id = ele[0]).Name
+                
+            created = recurring_bills_items.objects.create(item = it,quantity=ele[1],rate=ele[2],
+              tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6])
+
+
 
         return redirect('recurring_bill')
     return redirect('recurring_bill')
@@ -5314,7 +5309,7 @@ def edit_recurring_bills(request,id):
     acnt_type = Chart_of_Account.objects.filter(user = request.user).values('account_type').distinct()
     cust = customer.objects.filter(user = request.user)
     item = AddItem.objects.filter(user = request.user)
-    payments = payment_terms.objects.filter(user = request.user)
+    payments = payment_terms.objects.exclude(Days__isnull=True).filter(user_id=request.user.id)
     units = Unit.objects.all()
     sales=Sales.objects.all()
     purchase=Purchase.objects.all()
@@ -5402,7 +5397,7 @@ def change_recurring_bills(request,id):
         r_bill.save()          
 
         items = request.POST.getlist("item[]")
-        accounts = request.POST.getlist("account[]")
+        
         quantity = request.POST.getlist("quantity[]")
         rate = request.POST.getlist("rate[]")
 
@@ -5415,9 +5410,9 @@ def change_recurring_bills(request,id):
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
 
-        if len(items)==len(accounts)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and accounts and quantity and rate and tax and discount and amount and hsn:
+        if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and quantity and rate and tax and discount and amount and hsn:
                 
-            mapped=zip(items,accounts,quantity,rate,tax,discount,amount,hsn)
+            mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
             mapped=list(mapped)
 
             
@@ -5431,22 +5426,13 @@ def change_recurring_bills(request,id):
                     company = company_details.objects.get(user = request.user)
                     it = AddItem.objects.get(user = request.user, id = ele[0]).Name
                     it = AddItem.objects.get(user = request.user, id = ele[0]).Name
-                    try:
-                        int(ele[1])
-                        ac = Chart_of_Account.objects.get(user = request.user,id = ele[1]).account_name
-                        
-                    except ValueError:
-                        
-                        ac = ele[1]
-                    
-                    created = recurring_bills_items.objects.get_or_create(item = it,account = ac,quantity=ele[2],rate=ele[3],
-                    tax=ele[4],discount = ele[5],amount=ele[6],hsn=ele[7],recur_bills=r_bill.id,company=company,user = request.user)
+                    created = recurring_bills_items.objects.get_or_create(item = it,quantity=ele[1],rate=ele[2],
+                     tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6])
 
                 else:
-                    
-                    dbs=recurring_bills_items.objects.get(recur_bills =r_bill.id,item = ele[0],account=ele[1])
-                    created = recurring_bills_items.objects.filter(recur_bills =dbs.recur_bills,items = ele[0],account=ele[1]).update(item = ele[0],
-                        account = ele[1],quantity=ele[2],rate=ele[3], tax=ele[4],discount=ele[5],amount= ele[6],hsn= ele[7])
+                    dbs=recurring_bills_items.objects.get(recur_bills =r_bill.id,item = ele[0])
+                    created = recurring_bills_items.objects.filter(recur_bills =dbs.recur_bills,items = ele[0]).update(item = ele[0],
+                        quantity=ele[1],rate=ele[2], tax=ele[3],discount=ele[4],amount= ele[5],hsn=ele[6])
  
 
         return redirect('view_recurring_bills',id)
@@ -10170,7 +10156,7 @@ def new_bill(request):
     items = AddItem.objects.filter(user_id=user.id)
     vendors = vendor_table.objects.filter(user_id=user.id)
     customers = customer.objects.filter(user_id=user.id)
-    terms = payment_terms.objects.all()
+    terms = payment_terms.objects.exclude(Days__isnull=True).filter(user_id=user.id)
     units = Unit.objects.all()
     account = Chart_of_Account.objects.all()
     account_types = Chart_of_Account.objects.values_list('account_type', flat=True).distinct()
@@ -10461,7 +10447,7 @@ def create_purchase_bill(request):
         
 
         item = request.POST.getlist('item[]')
-        account = request.POST.getlist('account[]')
+       
         quantity = request.POST.getlist('quantity[]')
         rate = request.POST.getlist('rate[]')
         tax = request.POST.getlist('tax[]')
@@ -10496,12 +10482,12 @@ def create_purchase_bill(request):
                              payment_method=payment_method,amt_paid=amt_paid,balance=balance, adjustment= adjustment)
         bill.save()
         
-        if len(item) == len(quantity) == len(rate) == len(account) == len(tax) == len(amount) == len(hsn) == len(discount):
-            mapped = zip(item, quantity, rate, account, tax, amount, hsn, discount)
+        if len(item) == len(quantity) == len(rate) == len(tax) == len(amount) == len(hsn) == len(discount):
+            mapped = zip(item, quantity, rate, tax, amount, hsn, discount)
             mapped = list(mapped)
             for element in mapped:
                 created = PurchaseBillItems.objects.create(
-                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], account=element[3], tax_percentage=element[4], amount=element[5], hsn=element[6], discount=element[7])
+                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], tax_percentage=element[3], amount=element[4], hsn=element[5], discount=element[6])
     return redirect('view_bills')
 
 
@@ -10528,7 +10514,7 @@ def create_purchase_bill1(request):
         
 
         item = request.POST.getlist('item[]')
-        account = request.POST.getlist('account[]')
+        # account = request.POST.getlist('account[]')
         quantity = request.POST.getlist('quantity[]')
         rate = request.POST.getlist('rate[]')
         tax = request.POST.getlist('tax[]')
@@ -10549,7 +10535,7 @@ def create_purchase_bill1(request):
         attachment = request.FILES.get('file')
         status = 'Save'
         balance = float(total) - float(amt_paid)
-
+       
         bill = PurchaseBills(user=user, customer_name=cust_name,customer_email= cust_email,place_of_supply=pos,vendor_name=vendor_name,
                              vendor_email=vendor_email,vendor_gst_no=vendor_gst,source_of_supply=sos,bill_no=bill_number, order_number=order_number, bill_date=bill_date, 
                              due_date=due_date,payment_terms=terms, sub_total=sub_total,igst=igst,sgst=sgst,cgst=cgst,tax_amount=tax_amnt, 
@@ -10558,12 +10544,12 @@ def create_purchase_bill1(request):
         bill.save()
        
 
-        if len(item) == len(quantity) == len(rate) == len(account) == len(tax) == len(amount) == len(hsn) == len(discount):
-            mapped = zip(item, quantity, rate, account, tax, amount, hsn, discount)
+        if len(item) == len(quantity) == len(rate) == len(tax) == len(amount) == len(hsn) == len(discount):
+            mapped = zip(item, quantity, rate,tax, amount, hsn, discount)
             mapped = list(mapped)
             for element in mapped:
                 created = PurchaseBillItems.objects.create(
-                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], account=element[3], tax_percentage=element[4], amount=element[5], hsn=element[6], discount=element[7])
+                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], tax_percentage=element[3], amount=element[4], hsn=element[5], discount=element[6])
     return redirect('view_bills')
 
 
@@ -10601,7 +10587,7 @@ def edit_bill(request,bill_id):
     bill = PurchaseBills.objects.get(id=bill_id)
     bill_items = PurchaseBillItems.objects.filter(purchase_bill=bill)
     units = Unit.objects.all()
-    terms = payment_terms.objects.all()
+    terms = payment_terms.objects.exclude(Days__isnull=True).filter(user_id=user.id)
     account = Chart_of_Account.objects.all()
     account_types = Chart_of_Account.objects.values_list('account_type', flat=True).distinct()
     sales_acc = Sales.objects.all()
@@ -10682,7 +10668,7 @@ def update_bills(request,pk):
         bill.save()
 
         item = request.POST.getlist('item[]')
-        account = request.POST.getlist('account[]')
+        
         quantity = request.POST.getlist('quantity[]')
         rate = request.POST.getlist('rate[]')
         tax = request.POST.getlist('tax[]')
@@ -10700,12 +10686,12 @@ def update_bills(request,pk):
         objects_to_delete = PurchaseBillItems.objects.filter(purchase_bill_id=bill.id)
         objects_to_delete.delete()
  
-        if len(item) == len(quantity) == len(rate) == len(account) == len(tax) == len(amount) == len(hsn) == len(discount) and item and quantity and rate and account and tax and amount and hsn and discount:
-            mapped = zip(item, quantity, rate, account, tax, amount, hsn, discount)
+        if len(item) == len(quantity) == len(rate) == len(tax) == len(amount) == len(hsn) == len(discount) and item and quantity and rate and  tax and amount and hsn and discount:
+            mapped = zip(item, quantity, rate, tax, amount, hsn, discount)
             mapped = list(mapped)
             for element in mapped:
                 created = PurchaseBillItems.objects.create(
-                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], account=element[3], tax_percentage=element[4], amount=element[5], hsn=element[6], discount=element[7])
+                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], tax_percentage=element[3], amount=element[4], hsn=element[5], discount=element[6])
     return redirect('bill_view',b_id = bill.id)
 
 def upload_file_bills(request,bill_id):
@@ -17442,7 +17428,7 @@ def draft_recurring_bills(request):
 
         items = request.POST.getlist("item[]")
        
-        accounts = request.POST.getlist("account[]")
+        
         quantity = request.POST.getlist("qty[]")
         rate = request.POST.getlist("rate[]")
         
@@ -17455,24 +17441,17 @@ def draft_recurring_bills(request):
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
 
-        if len(items)==len(accounts)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and accounts and quantity and rate and tax and discount and amount and hsn:
+        if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and quantity and rate and tax and discount and amount and hsn:
                 
-                mapped=zip(items,accounts,quantity,rate,tax,discount,amount,hsn)
+                mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
                 mapped=list(mapped)
 
-                for ele in mapped:
+        for ele in mapped:
 
-                    it = AddItem.objects.get(user = request.user, id = ele[0]).Name
-                    try:
-                        int(ele[1])
-                        ac = Chart_of_Account.objects.get(user = request.user,id = ele[1]).account_name
-                        
-                    except ValueError:
-                        
-                        ac = ele[1]
-                    
-                    created = recurring_bills_items.objects.create(item = it,account = ac,quantity=ele[2],rate=ele[3],
-                    tax=ele[4],discount = ele[5],amount=ele[6],hsn=ele[7], user = u,company = company, recur_bills = r_bill)
+            it = AddItem.objects.get(user = request.user, id = ele[0]).Name
+                
+            created = recurring_bills_items.objects.create(item = it,quantity=ele[1],rate=ele[2],
+              tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6])
 
         return redirect('recurring_bill')
     return redirect('recurring_bill')
@@ -17523,7 +17502,7 @@ def change_draft_recurring_bills(request,id):
         r_bill.save()          
 
         items = request.POST.getlist("item[]")
-        accounts = request.POST.getlist("account[]")
+        
         quantity = request.POST.getlist("quantity[]")
         rate = request.POST.getlist("rate[]")
 
@@ -17536,9 +17515,9 @@ def change_draft_recurring_bills(request,id):
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
 
-        if len(items)==len(accounts)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and accounts and quantity and rate and tax and discount and amount and hsn:
+        if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and quantity and rate and tax and discount and amount and hsn:
                 
-            mapped=zip(items,accounts,quantity,rate,tax,discount,amount,hsn)
+            mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
             mapped=list(mapped)
 
             
@@ -17560,14 +17539,14 @@ def change_draft_recurring_bills(request,id):
                         
                         ac = ele[1]
                     
-                    created = recurring_bills_items.objects.get_or_create(item = it,account = ac,quantity=ele[2],rate=ele[3],
+                    created = recurring_bills_items.objects.get_or_create(item = it,quantity=ele[2],rate=ele[3],
                     tax=ele[4],discount = ele[5],amount=ele[6],hsn=ele[7],recur_bills=r_bill.id,company=company,user = request.user)
 
                 else:
                     
-                    dbs=recurring_bills_items.objects.get(recur_bills =r_bill.id,item = ele[0],account=ele[1])
-                    created = recurring_bills_items.objects.filter(recur_bills =dbs.recur_bills,items = ele[0],account=ele[1]).update(item = ele[0],
-                        account = ele[1],quantity=ele[2],rate=ele[3], tax=ele[4],discount=ele[5],amount= ele[6],hsn=ele[7])
+                    dbs=recurring_bills_items.objects.get(recur_bills =r_bill.id,item = ele[0])
+                    created = recurring_bills_items.objects.filter(recur_bills =dbs.recur_bills,items = ele[0]).update(item = ele[0],
+                        quantity=ele[1],rate=ele[2], tax=ele[3],discount=ele[4],amount= ele[5],hsn=ele[6])
  
 
         return redirect('view_recurring_bills',id)
@@ -17623,34 +17602,24 @@ def update_bills_save(request,pk):
         bill.save()
 
         item = request.POST.getlist('item[]')
-        account = request.POST.getlist('account[]')
+       
         quantity = request.POST.getlist('quantity[]')
         rate = request.POST.getlist('rate[]')
         tax = request.POST.getlist('tax[]')
         amount = request.POST.getlist('amount[]')
         hsn = request.POST.getlist('HSN[]')
         discount = request.POST.getlist('discount[]')
-        
        
-        print(item)
-        print(account)
-        print(quantity)
-        print(rate)
-        print(discount)
-        print(tax)
-        print(amount)
-        print(hsn)
-
         objects_to_delete = PurchaseBillItems.objects.filter(purchase_bill_id=bill.id)
         objects_to_delete.delete()
 
        
-        if len(item) == len(quantity) == len(rate) == len(account) == len(tax) == len(amount) == len(hsn) == len(discount) and item and quantity and rate and account and tax and amount and hsn and discount:
-            mapped = zip(item, quantity, rate, account, tax, amount ,hsn, discount)
+        if len(item) == len(quantity) == len(rate) == len(tax) == len(amount) == len(hsn) == len(discount) and item and quantity and rate and tax and amount and hsn and discount:
+            mapped = zip(item, quantity, rate, tax, amount ,hsn, discount)
             mapped = list(mapped)
             for element in mapped:
                 created = PurchaseBillItems.objects.create(
-                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], account=element[3], tax_percentage=element[4], amount=element[5], hsn=element[6], discount=element[7])
+                    purchase_bill=bill, item_name=element[0], quantity=element[1], rate=element[2], tax_percentage=element[3], amount=element[4], hsn=element[5], discount=element[6])
     return redirect('bill_view',b_id = bill.id)
 
 
