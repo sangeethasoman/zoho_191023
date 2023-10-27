@@ -349,7 +349,7 @@
                     <select name='item[]' id="item0" class="form-control item text-dark bg-light" onchange = "showRate(this.id,this.value);">
                       <option value=" " selected disabled>Select Item</option>
                       {% for i in item %}
-                        <option value="{{i.id}}">{{ i.Name }} </option>
+                        <option value="{{i.id}}">{{i.Name}}</option>
                       {% endfor %}
                     
                     </select>
@@ -507,22 +507,22 @@
                   <input type="text" placeholder="Select TAX" class="form-control selecttax text-dark bg-light" id="selecttax0">
                   <select name="tax1[]" id="intra_tax0" class="form-control tax1 d-none mb-2 text-dark bg-light">
                     <option id="ta1" value=0 text=' '>Choose GST</option>
-                    <option value=28 text={{ cmp1.state }}>28.0% GST(28%)</option>
-                    <option value=18 text={{ cmp1.state }}>18.0% GST(18%)</option>
-                    <option value=12 text={{ cmp1.state }}>12.0% GST(12%)</option>
-                    <option value=5 text={{ cmp1.state }}>05.0% GST(05%)</option>
-                    <option value=3 text={{ cmp1.state }}>03.0% GST(03%)</option>
-                    <option value=0 text={{ cmp1.state }}>0.0% GST(0%)</option>
+                    <option value=28 text="{{ cmp1.state }}">28.0% GST(28%)</option>
+                    <option value=18 text="{{ cmp1.state }"}>18.0% GST(18%)</option>
+                    <option value=12 text="{{ cmp1.state }}">12.0% GST(12%)</option>
+                    <option value=5 text="{{ cmp1.state }}">05.0% GST(05%)</option>
+                    <option value=3 text="{{ cmp1.state }}">03.0% GST(03%)</option>
+                    <option value=0 text="{{ cmp1.state }}">0.0% GST(0%)</option>
                   </select>
 
                   <select name="tax2[]" id="inter_tax0" class="form-control tax2 d-none mb-2 text-dark bg-light">
                     <option id="ta5" value=0 text=" "  >Choose IGST</option>
-                    <option value=28 text=" ">28.0% IGST(28%)</option>
-                    <option value=18 text=" ">18.0% IGST(18%)</option>
-                    <option value=12 text=" ">12.0% IGST(12%)</option>
-                    <option value=5 text=" ">05.0% IGST(05%)</option>
-                    <option value=3 text=" ">03.0% IGST(03%)</option>
-                    <option value=0 text=" ">0.0% IGST(0%)</option>
+                    <option value=28 text="{{ cmp1.state }}">28.0% IGST(28%)</option>
+                    <option value=18 text="{{ cmp1.state }}">18.0% IGST(18%)</option>
+                    <option value=12 text="{{ cmp1.state }}">12.0% IGST(12%)</option>
+                    <option value=5 text="{{ cmp1.state }}">05.0% IGST(05%)</option>
+                    <option value=3 text="{{ cmp1.state }}">03.0% IGST(03%)</option>
+                    <option value=0 text="{{ cmp1.state }}">0.0% IGST(0%)</option>
                   </select>
                 </td>
                 <td style="width: 11%;">
@@ -2471,7 +2471,7 @@ $(document).ready(function() {
               <select name='item[]' id="item${roinc}" class="form-control item text-dark bg-light" onchange = "showRate(this.id,this.value);">
                 <option value=" " selected disabled >Select Item</option>
                 {% for i in item %}
-                      <option value="{{ i.id }}">{{ i.Name  }} </option>
+                      <option value="{{i.id}}">{{i.Name}}</option>
                 {% endfor %}
               </select>
             </div>  
@@ -2493,22 +2493,22 @@ $(document).ready(function() {
             <input type="text" placeholder="Select TAX" class="form-control selecttax text-dark bg-light" id="selecttax${roinc}" style = "width:100px;" >
             <select name="tax1[]" id="intra_tax${roinc}" class="form-control tax1 d-none mb-2 text-dark bg-light" >
                 <option id="ta1" value=0 text=" ">Choose GST</option>
-                <option value=28 text={{ cmp1.state }}>28.0% GST(28%)</option>
-                <option value=18 text={{ cmp1.state }}>18.0% GST(18%)</option>
-                <option value=12 text={{ cmp1.state }}>12.0% GST(12%)</option>
-                <option value=5 text={{ cmp1.state }}>05.0% GST(05%)</option>
-                <option value=3 text={{ cmp1.state }}>03.0% GST(03%)</option>
-                <option value=0 text={{ cmp1.state }}>0.0% GST(0%)</option>
+                <option value=28 text="{{ cmp1.state }}">28.0% GST(28%)</option>
+                <option value=18 text="{{ cmp1.state }}">18.0% GST(18%)</option>
+                <option value=12 text="{{ cmp1.state }}">12.0% GST(12%)</option>
+                <option value=5 text="{{ cmp1.state }}">05.0% GST(05%)</option>
+                <option value=3 text="{{ cmp1.state }}">03.0% GST(03%)</option>
+                <option value=0 text="{{ cmp1.state }}">0.0% GST(0%)</option>
             </select>
 
             <select name="tax2[]" id="inter_tax${roinc}" class="form-control tax2 d-none mb-2 text-dark bg-light">
               <option id="ta5" value=0 text=" " >Choose IGST</option>
-              <option value=28 text=" ">28.0% IGST(28%)</option>
-              <option value=18 text=" ">18.0% IGST(18%)</option>
-              <option value=12 text=" ">12.0% IGST(12%)</option>
-              <option value=5 text=" ">05.0% IGST(05%)</option>
-              <option value=3 text=" ">03.0% IGST(03%)</option>
-              <option value=0 text=" ">0.0% IGST(0%)</option>
+              <option value=28 text="{{ cmp1.state }}">28.0% IGST(28%)</option>
+              <option value=18 text="{{ cmp1.state }}">18.0% IGST(18%)</option>
+              <option value=12 text="{{ cmp1.state }}">12.0% IGST(12%)</option>
+              <option value=5 text="{{ cmp1.state }}">05.0% IGST(05%)</option>
+              <option value=3 text="{{ cmp1.state }}">03.0% IGST(03%)</option>
+              <option value=0 text="{{ cmp1.state }}">0.0% IGST(0%)</option>
             </select>
           </td>
             

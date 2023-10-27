@@ -16,7 +16,7 @@ from django.http import JsonResponse
 from datetime import datetime,date, timedelta
 from xhtml2pdf import pisa
 from django.template.loader import get_template
-from bs4 import BeautifulSoup
+
 import io
 import os
 import json
@@ -5283,22 +5283,33 @@ def create_recurring_bills(request):
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
 
+        print(items)
+        print(quantity) 
+        print(rate)
+        print(tax) 
+        print(discount) 
+        print(amount) 
+        print(hsn) 
+
         if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and  quantity and rate and tax and discount and amount and hsn:
                 
                 mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
                 mapped=list(mapped)
 
-        for ele in mapped:
+                for ele in mapped:
 
-            it = AddItem.objects.get(user = request.user, id = ele[0]).Name
+                    it = AddItem.objects.get(user = request.user, id = ele[0]).Name
+                        
+                    created = recurring_bills_items.objects.create(item = it,quantity=ele[1],rate=ele[2],
+                    tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6], user = u,company = company, recur_bills = r_bill)
                 
-            created = recurring_bills_items.objects.create(item = it,quantity=ele[1],rate=ele[2],
-              tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6])
-
-
-
         return redirect('recurring_bill')
+    
     return redirect('recurring_bill')
+
+
+
+
 
 @login_required(login_url='login')
 def edit_recurring_bills(request,id):
@@ -5398,7 +5409,7 @@ def change_recurring_bills(request,id):
 
         items = request.POST.getlist("item[]")
         
-        quantity = request.POST.getlist("quantity[]")
+        quantity = request.POST.getlist("qty[]")
         rate = request.POST.getlist("rate[]")
 
         if (" ".join(request.POST['srcofsupply'].split(" ")[1:])) == company.state:
@@ -5409,7 +5420,7 @@ def change_recurring_bills(request,id):
         discount = request.POST.getlist("discount[]") 
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
-
+        
         if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and quantity and rate and tax and discount and amount and hsn:
                 
             mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
@@ -5419,7 +5430,7 @@ def change_recurring_bills(request,id):
             count = recurring_bills_items.objects.filter(recur_bills=r_bill.id).count()
             
             for ele in mapped:
-
+                print('hellogioh')
                 if int(len(items))>int(count):
 
                     pbillss=recurring_bills.objects.get(id=id)
@@ -5427,9 +5438,10 @@ def change_recurring_bills(request,id):
                     it = AddItem.objects.get(user = request.user, id = ele[0]).Name
                     it = AddItem.objects.get(user = request.user, id = ele[0]).Name
                     created = recurring_bills_items.objects.get_or_create(item = it,quantity=ele[1],rate=ele[2],
-                     tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6])
+                     tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6],recur_bills=r_bill.id,company=company,user = request.user)
 
                 else:
+                    print('hello')
                     dbs=recurring_bills_items.objects.get(recur_bills =r_bill.id,item = ele[0])
                     created = recurring_bills_items.objects.filter(recur_bills =dbs.recur_bills,items = ele[0]).update(item = ele[0],
                         quantity=ele[1],rate=ele[2], tax=ele[3],discount=ele[4],amount= ele[5],hsn=ele[6])
@@ -17441,20 +17453,22 @@ def draft_recurring_bills(request):
         amount = request.POST.getlist("amount[]")
         hsn = request.POST.getlist('HSN[]')
 
-        if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and quantity and rate and tax and discount and amount and hsn:
+        if len(items)==len(amount) == len(quantity) == len(rate)==len(tax) == len(discount) == len(hsn) and items and  quantity and rate and tax and discount and amount and hsn:
                 
                 mapped=zip(items,quantity,rate,tax,discount,amount,hsn)
                 mapped=list(mapped)
 
-        for ele in mapped:
+                for ele in mapped:
 
-            it = AddItem.objects.get(user = request.user, id = ele[0]).Name
+                    it = AddItem.objects.get(user = request.user, id = ele[0]).Name
+                        
+                    created = recurring_bills_items.objects.create(item = it,quantity=ele[1],rate=ele[2],
+                    tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6], user = u,company = company, recur_bills = r_bill)
                 
-            created = recurring_bills_items.objects.create(item = it,quantity=ele[1],rate=ele[2],
-              tax=ele[3],discount = ele[4],amount=ele[5],hsn=ele[6])
-
         return redirect('recurring_bill')
+    
     return redirect('recurring_bill')
+
 
 
 def change_draft_recurring_bills(request,id):
