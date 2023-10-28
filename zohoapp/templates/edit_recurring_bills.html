@@ -158,49 +158,7 @@
         </div>
 
         <div class="col-md-6">
-            <select class="form-control text-dark bg-light"  name="srcofsupply" id="srcofsupply">
-                <option value="{{recur_bills.source_supply}}" selected>{{recur_bills.source_supply}}</option>    
-
-                <option value="[AN] Andaman and Nicobar Islads">[AN] Andaman and Nicobar Islads</option>
-                <option value="[AD] Andhra Predhesh">[AD] Andhra Predhesh</option>
-                <option value="[AR] Arunachal Predesh">[AR] Arunachal Predesh</option>
-                <option value="[AS] Assam">[AS] Assam</option>
-                <option value="[BR] Bihar">[BR] Bihar</option>
-                <option value="[CH] Chandigarh">[CH] Chandigarh</option>
-                <option value="[CG] Chhattisgarh">[CG] Chhattisgarh</option>
-                <option value="[DNH] Dadra and Nagar Haveli">[DNH] Dadra and Nagar Haveli</option>
-                <option value="[DD] Damn anad Diu">[DD] Damn anad Diu</option>
-                <option value="[DL] Delhi">[DL] Delhi</option>
-                <option value="[GA] Goa">[GA] Goa</option>
-                <option value="[GJ] Gujarat">[GJ] Gujarat</option>
-                <option value="[HR] Haryana">[HR] Haryana</option>
-                <option value="[HP] Himachal Predesh">[HP] Himachal Predesh</option>
-                <option value="[JK] Jammu and Kashmir">[JK] Jammu and Kashmir</option>
-                <option value="[JH] Jharkhand">[JH] Jharkhand</option>
-                <option value="[KA] Karnataka">[KA] Karnataka</option>
-                <option value="[KL] Kerala">[KL] Kerala</option>
-                <option value="[LA] Ladakh">[LA] Ladakh</option>
-                <option value="[LD] Lakshadweep">[LD] Lakshadweep</option>
-                <option value="[MP] Madhya Predesh">[MP] Madhya Predesh</option>
-                <option value="[MH] Maharashtra">[MH] Maharashtra</option>
-                <option value="[MN] Manipur">[MN] Manipur</option>
-                <option value="[ML] Meghalaya">[ML] Meghalaya</option>
-                <option value="[MZ] Mizoram">[MZ] Mizoram</option>
-                <option value="[NL] Nagaland">[NL] Nagaland</option>
-                <option value="[OD] Odisha">[OD] Odisha</option>
-                <option value="[PY] Puducherry">[PY] Puducherry</option>
-                <option value="[PB] Punjab">[PB] Punjab</option>
-                <option value="[RJ] Rajasthan">[RJ] Rajasthan</option>
-                <option value="[SK] Sikkim">[SK] Sikkim</option>
-                <option value="[TN] Tamil Nadu">[TN] Tamil Nadu</option>
-                <option value="[TS] Telangana">[TS] Telangana</option>
-                <option value="[TR] Tripura">[TR] Tripura</option>
-                <option value="[UP] Uttar Predesh">[UP] Uttar Predesh</option>
-                <option value="[UK] Uttarakhand">[UK] Uttarakhand</option>
-                <option value="[WB] West Bengal">[WB] West Bengal</option>
-                <option value="[OT] Other Territory">[OT] Other Territory</option>
-            </select>
-            
+          <input type="text" class="form-control text-dark bg-light"  id="vsrcofsupply" name="vsrcofsupply"  >
         </div>
       </div> 
       
@@ -357,7 +315,7 @@
           <label for="srcofsupply">Source Of Supply</label>
         </div>
         <div class="col-md-6">
-          <input type="text" class="form-control text-dark bg-light"  id="csrcofsupply" name="csrcofsupply"  >
+          <input type="text" class="form-control text-dark bg-light"  id="srcofsupply" name="srcofsupply"  >
         </div>
       </div>
 
@@ -402,10 +360,11 @@
             </thead>
             <tbody id="items-table-body">
               {% for ri in recur_items %}
-              <tr id='addr{{forloop.counter}}' class="addr">
+              {{forloop.counter|add:"-1"}}
+              <tr id='addr{{forloop.counter|add:"-1"}}' class="addr">
                 <td style="width: 20%;">
                   <div class="d-flex" >
-                    <select name='item[]' id="item{{forloop.counter0}}" class="form-control item text-dark bg-light" onchange = "showRate(this.id,this.value);">
+                    <select name='item[]' id="item{{forloop.counter|add:'-1'}}" class="form-control item text-dark bg-light" onchange = "showRate(this.id,this.value);">
                       <option value="{{ri.item}}" selected >{{ri.item}}</option>
                       {% for i in item %}
                         <option value="{{i.id}}">{{i.Name}}</option>
@@ -415,20 +374,20 @@
                   </div>  
                 </td>
                 <td  style="width: 50%;">
-                  <input type="text" value="{{ri.hsn}}" name='HSN[]' id="HSN0" placeholder='HSN' class="form-control HSN text-dark bg-light" />
+                  <input type="text" value="{{ri.hsn}}" name='HSN[]' id="HSN{{forloop.counter|add:'-1'}}" placeholder='HSN' class="form-control HSN text-dark bg-light" />
                 </td>
 
                
                 <td style="width: 10%;">
-                  <input type="text" name='qty[]' placeholder='Qty' id="qty{{forloop.counter0}}" value="{{ri.quantity}}"  class="form-control qty text-dark bg-light" step=0 min=0/>
+                  <input type="text" name='qty[]' placeholder='Qty' id="qty{{forloop.counter|add:'-1'}}" value="{{ri.quantity}}"  class="form-control qty text-dark bg-light" step=0 min=0/>
                 </td>
                 <td style="width: 10%;">
-                  <input type="text" name='rate[]' id="rate{{forloop.counter0}}" placeholder='Rate' value="{{ ri.rate }}" class="form-control rate text-dark bg-light" step="0.00" min="0" />
+                  <input type="text" name='rate[]' id="rate{{forloop.counter|add:'-1'}}" placeholder='Rate' value="{{ ri.rate }}" class="form-control rate text-dark bg-light" step="0.00" min="0" />
                 </td>
                 <td style="width: 15%;">
-                  <input type="hidden" id="tax_total0" class="form-control mb-2 d-none">
+                  <input type="hidden" id="tax_total{{forloop.counter|add:'-1'}}" class="form-control mb-2 d-none">
                   <input type="text" placeholder="Select TAX" class="form-control selecttax text-dark bg-light" id="selecttax0">
-                  <select name="tax[]" id="intra_tax0" class="form-control tax1 d-none mb-2 text-dark bg-light">
+                  <select name="tax1[]" id="intra_tax{{forloop.counter|add:'-1'}}" class="form-control tax1 d-none mb-2 text-dark bg-light">
                     <option id="ta1" value="{{ ri.tax  }} " text="{{ cmp1.state }}" >{{ ri.tax }}% GST({{ ri.tax }}%)</option>
                     <option value=28 text="{{ cmp1.state }}">28.0% GST(28%)</option>
                     <option value=18 text="{{ cmp1.state }}">18.0% GST(18%)</option>
@@ -438,7 +397,7 @@
                     <option value=0 text="{{ cmp1.state }}">0.0% GST(0%)</option>
                   </select>
 
-                  <select name="tax[]" id="inter_tax0" class="form-control tax2 d-none mb-2 text-dark bg-light">
+                  <select name="tax2[]" id="inter_tax{{forloop.counter|add:'-1'}}" class="form-control tax2 d-none mb-2 text-dark bg-light">
                     <option id="ta5" value="{{ ri.tax  }} " text="{{ cmp1.state }}">{{ ri.tax }}% IGST({{ ri.tax }}%) </option>                      
                     <option value=28 text="{{ cmp1.state }}">28.0% IGST(28%)</option>
                     <option value=28 text="{{ cmp1.state }}">28.0% IGST(28%)</option>
@@ -451,11 +410,11 @@
                 </td>
                 
                 <td style="width: 11%;">
-                  <input type="text" name='discount[]' id="disc{{forloop.counter}}" value=" {{ri.discount}} " placeholder='Discount' class="text-dark bg-light form-control disc" step="0.00" min="0"/>
+                  <input type="text" name='discount[]' id="disc{{forloop.counter|add:'-1'}}" value="{{ri.discount}}" placeholder='Discount' class="text-dark bg-light form-control disc" step="0.00" min="0"/>
                 </td>
 
                 <td style="width: 11%;">
-                  <input type="text" name='amount[]' id="amount{{forloop.counter}}" value=" {{ri.amount}} " placeholder='Amount' class=" text-dark bg-light form-control amount" step="0.00" min="0" />
+                  <input type="text" name='amount[]' id="amount{{forloop.counter|add:'-1'}}" value="{{ri.amount}}" placeholder='Amount' class=" text-dark bg-light form-control amount" step="0.00" min="0" />
                 </td>
                 <td>
                   <button type="button" id="0" class="btn btn-outline-primary clone_row text-center mb-1 p-1 " data-toggle= "tooltip" data-placement="bottom" tooltip="Clone"
@@ -548,7 +507,7 @@
           <div class="row container-fluid p-2 m-0" id="tax_amount">
             <div class="col-sm-5 mt-2"><label for="a" class="text-center">Tax Amount</label></div>
             <div class="col-sm-3 mt-2"></div>
-            <div class="col-sm-4 mt-2"><input type="number" id="total_taxamount" name="total_taxamount"step="0.00" min="0" placeholder=0 value="{{recur_bills.tax_amount}}"
+            <div class="col-sm-4 mt-2"><input type="number" id="total_taxamount" readonly name="total_taxamount"step="0.00" min="0" placeholder=0 value="{{recur_bills.tax_amount}}"
                 class="total_taxamount form-control text-dark bg-light"  style="background-color: #2A3038;border: 1px solid #2c2e33;"/>
             </div>
           </div>
@@ -2258,29 +2217,27 @@ function toggleDateInput() {
                 $("#gst_trt_row").removeClass('d-none');
                 $("#gst_trt_row").addClass('d-flex');
 
-                $('#email_inp').val(" " +data.vendor_email);
-                $('#gstin_inp').val(" " +data.gst_number);
-                $('#gst_trt_inp').val(" "+data.gst_treatment);
+                $('#email_inp').val(data.vendor_email);
+                $('#gstin_inp').val(data.gst_number);
+                $('#gst_trt_inp').val(data.gst_treatment);
                 $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
-                $('#gstin_inp').val(' '+ data.gstin);
-                srcofsupply();
-                
+                $('#gstin_inp').val(data.gstin); 
 
                 if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
               }
               
               else{
@@ -2318,28 +2275,27 @@ $(document).ready(function() {
                 $("#gst_trt_row").removeClass('d-none');
                 $("#gst_trt_row").addClass('d-flex');
 
-                $('#email_inp').val(" " +data.vendor_email);
-                $('#gstin_inp').val(" " +data.gst_number);
-                $('#gst_trt_inp').val(" "+data.gst_treatment);
+                $('#email_inp').val(data.vendor_email);
+                $('#gstin_inp').val(data.gst_number);
+                $('#gst_trt_inp').val(data.gst_treatment);
                 $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
-                $('#gstin_inp').val(' '+ data.gst_number);
-                srcofsupply();
+                $('#gstin_inp').val(data.gst_number); 
 
                 if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                  $("#gstin_row").removeClass('d-none');
                  $("#gstin_row").addClass('d-flex');
-                 $('#gstin_inp').val(' '+ data.gst_number);
+                 $('#gstin_inp').val(data.gst_number);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
               }
               
               else{
@@ -2375,27 +2331,25 @@ $.ajax({
       
       $("#cgst_trt_row").removeClass('d-none');
       $("#cgst_trt_row").addClass('d-flex');
-      $('#cemail_inp').val(' '+ data.customer_email);
-      $('#csrcofsupply').val(' '+ data.cust_place_supply);
-      $('#cgst_trt_inp').val(' ' +data.gst_treatment);
-      $('#cgstin_inp').val(' '+ data.gstin);
-      
-      srcofsupply();
+      $('#cemail_inp').val(data.customer_email);
+      $('#srcofsupply').val(data.cust_place_supply);
+      $('#cgst_trt_inp').val(data.gst_treatment);
+      $('#cgstin_inp').val(data.gstin); 
       if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
         $("#cgstin_row").removeClass('d-none');
         $("#cgstin_row").addClass('d-flex');
-        $('#cgstin_inp').val(' '+ data.gstin);
+        $('#cgstin_inp').val(data.gstin);
 
       }
       else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
         $("#cgstin_row").removeClass('d-none');
         $("#cgstin_row").addClass('d-flex');
-        $('#cgstin_inp').val(' '+ data.gstin);
+        $('#cgstin_inp').val(data.gstin);
       }
       else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
         $("#cgstin_row").removeClass('d-none');
         $("#cgstin_row").addClass('d-flex');
-        $('#cgstin_inp').val(' '+ data.gstin);
+        $('#cgstin_inp').val(data.gstin);
       }
       
       else{
@@ -2405,7 +2359,7 @@ $.ajax({
         // gst or igst in tax
 
       $("#cust_state").val(data.state);
-      
+      srcofsupply()
     }
     
 });
@@ -2413,41 +2367,184 @@ $.ajax({
 });
 
 function srcofsupply(){ debugger
-  $(".selecttax").removeClass('d-none');
-  $(".selecttax").addClass('d-flex');
-  var st = $("#csrcofsupply").val().split(" ").slice(1).join(" ").trim();
-  console.log(st)
-  if( st == $("#company_state").val())
-  {
-    $(".tax2").removeClass('d-flex');
-    $(".tax2").addClass('d-none');
-    $(".tax1").removeClass('d-flex');
-    $(".tax1").addClass('d-none');
+      $(".selecttax").removeClass('d-flex');
+      $(".selecttax").addClass('d-none');
+      var custsrcofsupply = $("#srcofsupply").val().split('-')[1];  
+      if(custsrcofsupply == $("#company_state").val())
+      {
+        $(".tax2").removeClass('d-flex');
+        $(".tax2").addClass('d-none');
+        $(".tax1").removeClass('d-none');
+        $(".tax1").addClass('d-flex'); 
 
-    $("#cgst1").removeClass('d-none');
-    $("#cgst1").addClass('d-flex');
-    $("#sgst1").removeClass('d-none');
-    $("#sgst1").addClass('d-flex');
+        $("#cgst1").removeClass('d-none');
+        $("#cgst1").addClass('d-flex');
+        $("#sgst1").removeClass('d-none');
+        $("#sgst1").addClass('d-flex');
 
-    $("#igst1").removeClass('d-flex');
-    $("#igst1").addClass('d-none');
+        $("#igst1").removeClass('d-flex');
+        $("#igst1").addClass('d-none');
 
+      }
+      else{ 
+
+        $(".tax2").removeClass('d-none');
+        $(".tax2").addClass('d-flex');
+        $(".tax1").removeClass('d-flex');
+        $(".tax1").addClass('d-none'); 
+
+        $("#igst1").removeClass('d-none');
+        $("#igst1").addClass('d-flex');
+
+        $("#cgst1").removeClass('d-flex');
+        $("#cgst1").addClass('d-none');
+        $("#sgst1").removeClass('d-flex');
+        $("#sgst1").addClass('d-none');
+      }
+     
   }
-  else{
-    $(".tax1").removeClass('d-flex');
-    $(".tax1").addClass('d-none');
-    $(".tax2").removeClass('d-flex');
-    $(".tax2").addClass('d-none');
+ function itemchange(){
+  
+  var row_count = $("#items-table-body tr").length;
+    var tax_tot = 0
 
-    $("#igst1").removeClass('d-none');
-    $("#igst1").addClass('d-flex');
+    var amount_total = 0;
+    var ship = parseFloat($("#addcharge").val());
 
-    $("#cgst1").removeClass('d-flex');
-    $("#cgst1").addClass('d-none');
-    $("#sgst1").removeClass('d-flex');
-    $("#sgst1").addClass('d-none');
-  }
-  }
+    for(var i=0; i<row_count;i++){
+      var rate = $("#rate"+i).val();
+      var qnty = $("#qty" +i).val();
+      var amount = rate*qnty;
+      var disc = $("#disc" + i).val();
+
+      var tax1 = $("#intra_tax" +i).val();
+      var tax2 = $("#inter_tax" +i).val();
+
+      if (tax1 == 0){
+        if(tax2 == 0){
+          if (disc){
+            amount_disc =  amount - disc;
+            $("#amount" + i).val(amount_disc);
+             
+          }
+
+          else{
+            $("#amount" +i).val(amount);
+           }
+          tax = 0;
+          tax_tot += tax;
+        }
+        else{
+          if (disc){
+            amount_disc =  amount - disc;
+            $("#amount" + i).val(amount_disc);
+            tax =(amount_disc*(tax2/100));
+          }
+
+          else{
+            $("#amount" +i).val(amount);
+            tax =(amount*(tax2/100));
+           }
+          
+          tax_tot += tax;
+          $("#igst").val(tax_tot);
+          $("#total_taxamount").val(tax_tot);
+        }
+      }
+      else{
+        if (disc){
+            amount_disc =  amount - disc;
+            $("#amount" + i).val(amount_disc);
+            tax =(amount_disc*(tax1/100));
+          }
+
+          else{
+            $("#amount" +i).val(amount);
+            tax =(amount*(tax1/100));
+           }
+        tax = (amount*(tax1/100));
+        tax_tot += tax;
+        $("#sgst").val(tax_tot/2);
+        $("#cgst").val(tax_tot/2);
+        $("#total_taxamount").val(tax_tot);
+      }
+
+      if(ship){
+        // console.log('yea');
+        if (disc){
+          amount_disc =  amount - disc;
+          $("#amount" + i).val(amount_disc);
+          amount_total += amount_disc;
+          $("#subtotal").val(amount_total);
+          
+          $("#grandtotal").val(amount_total+ ship +tax_tot);
+        }
+
+        else{
+          $("#amount" +i).val(amount);
+          amount_total += amount;
+          $("#subtotal").val(amount_total);
+          $("#grandtotal").val(amount_total+ ship +tax_tot);
+        }
+      }
+      else{
+
+        if (disc){
+          amount_disc =  amount - disc;
+          $("#amount" +i).val(amount_disc);
+          amount_total += amount_disc;
+          $("#subtotal").val(amount_total);
+        
+          $("#grandtotal").val(amount_total+tax_tot);
+        }
+
+        else{
+          $("#amount" +i).val(amount);
+          amount_total += amount;
+          $("#subtotal").val(amount_total);
+          $("#grandtotal").val(amount_total+tax_tot);
+        }
+      }
+      
+    }  
+ }
+
+// function srcofsupply(){ debugger
+//   $(".selecttax").removeClass('d-none');
+//   $(".selecttax").addClass('d-flex');
+//   var st = $("#srcofsupply").val().split(" ").slice(1).join(" ").trim();
+//   console.log(st)
+//   if( st == $("#company_state").val())
+//   {
+//     $(".tax2").removeClass('d-flex');
+//     $(".tax2").addClass('d-none');
+//     $(".tax1").removeClass('d-flex');
+//     $(".tax1").addClass('d-none');
+
+//     $("#cgst1").removeClass('d-none');
+//     $("#cgst1").addClass('d-flex');
+//     $("#sgst1").removeClass('d-none');
+//     $("#sgst1").addClass('d-flex');
+
+//     $("#igst1").removeClass('d-flex');
+//     $("#igst1").addClass('d-none');
+
+//   }
+//   else{
+//     $(".tax1").removeClass('d-flex');
+//     $(".tax1").addClass('d-none');
+//     $(".tax2").removeClass('d-flex');
+//     $(".tax2").addClass('d-none');
+
+//     $("#igst1").removeClass('d-none');
+//     $("#igst1").addClass('d-flex');
+
+//     $("#cgst1").removeClass('d-flex');
+//     $("#cgst1").addClass('d-none');
+//     $("#sgst1").removeClass('d-flex');
+//     $("#sgst1").addClass('d-none');
+//   }
+//   }
 
 $(document).ready(function() {
     $('#customer').change(function() {
@@ -2474,28 +2571,26 @@ debugger
               
               $("#cgst_trt_row").removeClass('d-none');
               $("#cgst_trt_row").addClass('d-flex');
-              $('#cemail_inp').val(' '+ data.customer_email);
-              $('#csrcofsupply').val(' '+ data.cust_place_supply);
-              $('#cgst_trt_inp').val(' ' +data.gst_treatment);
-              $('#cgstin_inp').val(' '+ data.gstin);
-             
-              srcofsupply();
+              $('#cemail_inp').val(data.customer_email);
+              $('#srcofsupply').val(data.cust_place_supply);
+              $('#cgst_trt_inp').val(data.gst_treatment);
+              $('#cgstin_inp').val(data.gstin); 
 
               if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                 $("#cgstin_row").removeClass('d-none');
                 $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(data.gstin);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
                 $("#cgstin_row").removeClass('d-none');
                 $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(data.gstin);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 $("#cgstin_row").removeClass('d-none');
                 $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(data.gstin);
               }
               
               else{
@@ -2549,7 +2644,7 @@ debugger
           <td style="width: 15%;">
             <input type="hidden" id="tax_total0" class="form-control mb-2 d-none">
             <input type="text" placeholder="Select TAX" class="form-control selecttax text-dark bg-light" id="selecttax${roinc}"  style = "width:100px;">
-            <select name="tax[]" id="intra_tax${roinc}" class="form-control tax1 d-none mb-2 text-dark bg-light">
+            <select name="tax1[]" id="intra_tax${roinc}" class="form-control tax1 d-none mb-2 text-dark bg-light">
                 <option id="ta1" value=0 text=" ">Choose GST</option>
                 <option value=28 text="{{ cmp1.state }}">28.0% GST(28%)</option>
                 <option value=18 text="{{ cmp1.state }}">18.0% GST(18%)</option>
@@ -2559,7 +2654,7 @@ debugger
                 <option value=0 text="{{ cmp1.state }}">0.0% GST(0%)</option>
             </select>
 
-            <select name="tax[]" id="inter_tax${roinc}" class="form-control tax2 d-none mb-2 text-dark bg-light">
+            <select name="tax2[]" id="inter_tax${roinc}" class="form-control tax2 d-none mb-2 text-dark bg-light">
               <option id="ta5" value=0 text=" " >Choose IGST</option>
               <option value=28 text="{{ cmp1.state }}">28.0% IGST(28%)</option>
               <option value=18 text="{{ cmp1.state }}">18.0% IGST(18%)</option>
@@ -2571,7 +2666,7 @@ debugger
           </td>
             
           <td style="width: 11%;">
-            <input type="text" name='discount[]' style = "width:90px; id="disc${roinc}" placeholder='Discount' class="form-control disc text-dark bg-light" step="0.00" min="0"/>
+            <input type="text" name='discount[]' style = "width:90px;" id="disc${roinc}" placeholder='Discount' class="form-control disc text-dark bg-light" value ="0" step="0.00" min="0"/>
           </td>
           <td style="width: 11%;">
             <input type="text" name='amount[]' id="amount${roinc}" style = "width:90px;" placeholder='Amount' class="form-control amount text-dark bg-light" step="0.00" min="0"  />
@@ -2735,6 +2830,7 @@ debugger
           tax_tot += tax;
           // console.log(tax_tot);
           $("#igst").val(tax_tot);
+          $("#total_taxamount").val(tax_tot);
         }
       }
       else{
@@ -2743,6 +2839,7 @@ debugger
         tax_tot += tax;
         $("#sgst").val(tax_tot/2);
         $("#cgst").val(tax_tot/2);
+        $("#total_taxamount").val(tax_tot);
       }
       if(ship){
         $("#grandtotal").val(amount_t+tax_tot+ship)
@@ -2835,6 +2932,7 @@ $(document).on('click','.remove_row',function(){
             tax_tot += tax;
             // console.log(tax_tot);
             $("#igst").val(tax_tot);
+            $("#total_taxamount").val(tax_tot);
           }
         }
         else{
@@ -2843,6 +2941,7 @@ $(document).on('click','.remove_row',function(){
           tax_tot += tax;
           $("#sgst").val(tax_tot/2);
           $("#cgst").val(tax_tot/2);
+          $("#total_taxamount").val(tax_tot);
         }
         if(ship){
           $("#grandtotal").val(amount_t+tax_tot+ship)
@@ -3510,6 +3609,8 @@ function reloadAccount() {
       success: function(response) {
         $("#rate" +n).val(response.rate);
         $("#HSN" +n).val(response.hsn);
+        srcofsupply();
+        itemchange();
       },
     });
 
@@ -3574,45 +3675,7 @@ $(document).on("click",".selecttax",function(){
 });
 
 
-  $(document).ready(function(){
-
-    $(".selecttax").removeClass('d-flex');
-    $(".selecttax").addClass('d-none');
-    var st = $("#srcofsupply").val().split(" ").slice(1).join(" ").trim();
-    console.log(st == $("#company_state").val())
-    if( st == $("#company_state").val())
-    {
-      $(".tax2").removeClass('d-flex');
-      $(".tax2").addClass('d-none');
-      $(".tax1").removeClass('d-none');
-      $(".tax1").addClass('d-flex');
-
-      $("#cgst1").removeClass('d-none');
-      $("#cgst1").addClass('d-flex');
-      $("#sgst1").removeClass('d-none');
-      $("#sgst1").addClass('d-flex');
-
-      $("#igst1").removeClass('d-flex');
-      $("#igst1").addClass('d-none');
-
-    }
-    else{
-      $(".tax1").removeClass('d-flex');
-      $(".tax1").addClass('d-none');
-      $(".tax2").removeClass('d-none');
-      $(".tax2").addClass('d-flex');
-
-      $("#igst1").removeClass('d-none');
-      $("#igst1").addClass('d-flex');
-
-      $("#cgst1").removeClass('d-flex');
-      $("#cgst1").addClass('d-none');
-      $("#sgst1").removeClass('d-flex');
-      $("#sgst1").addClass('d-none');
-    }
-  });
-    
-  $(document).on('change','.qty',function(){
+  $(document).on('change','.qty',function(){debugger
 
 var row_count = $("#items-table-body tr").length;
 var tax_tot = 0
@@ -3657,6 +3720,7 @@ for(var i=0; i<row_count;i++){
       
       tax_tot += tax;
       $("#igst").val(tax_tot);
+      $("#total_taxamount").val(tax_tot);
     }
   }
   else{
@@ -3674,6 +3738,7 @@ for(var i=0; i<row_count;i++){
     tax_tot += tax;
     $("#sgst").val(tax_tot/2);
     $("#cgst").val(tax_tot/2);
+    $("#total_taxamount").val(tax_tot);
   }
 
   if(ship){
@@ -3717,7 +3782,7 @@ for(var i=0; i<row_count;i++){
 });
 
 
-$(document).on('change','.disc',function(){
+$(document).on('change','.disc',function(){ debugger
 
 var row_count1 = $("#items-table-body tr").length;
 var amount_tot = 0;
@@ -3757,6 +3822,7 @@ for(i = 0;i<row_count1 ; i++){
           tax_tot1 += tax;
           $("#sgst").val(tax_tot1/2);
           $("#cgst").val(tax_tot1/2);
+          $("#total_taxamount").val(tax_tot1);
       }
   // console.log(tax)
   // console.log(tax_tot1)
@@ -3800,6 +3866,7 @@ for(i = 0;i<row_count2 ; i++){
 
   $("#sgst").val(tax_tot3/2);
   $("#cgst").val(tax_tot3/2);
+  $("#total_taxamount").val(tax_tot3);
 
 
   if(disc){
@@ -3880,8 +3947,8 @@ for(i = 0;i<row_count2 ; i++){
 
 
     $(document).on("change","#addcharge",function(){
-
-      if($("#srcofsupply").val() == $("#company_state").val()){
+      var sta = $("#srcofsupply").val().split('-')[1]
+      if(sta == $("#company_state").val()){
         var total =parseFloat( $("#subtotal").val())+ parseFloat( $("#sgst").val())+ parseFloat($("#cgst").val())+ parseFloat($("#addcharge").val());
         $("#grandtotal").val(total);
       }

@@ -508,7 +508,7 @@
                   <select name="tax1[]" id="intra_tax0" class="form-control tax1 d-none mb-2 text-dark bg-light">
                     <option id="ta1" value=0 text=' '>Choose GST</option>
                     <option value=28 text="{{ cmp1.state }}">28.0% GST(28%)</option>
-                    <option value=18 text="{{ cmp1.state }"}>18.0% GST(18%)</option>
+                    <option value=18 text="{{ cmp1.state }}">18.0% GST(18%)</option>
                     <option value=12 text="{{ cmp1.state }}">12.0% GST(12%)</option>
                     <option value=5 text="{{ cmp1.state }}">05.0% GST(05%)</option>
                     <option value=3 text="{{ cmp1.state }}">03.0% GST(03%)</option>
@@ -526,7 +526,7 @@
                   </select>
                 </td>
                 <td style="width: 11%;">
-                  <input type="text" name='discount[]' id="disc0" placeholder='Discount' class="form-control disc text-dark bg-light" step="0.00" min="0"style="width: 90px;" />
+                  <input type="text" name='discount[]' id="disc0" value="0" placeholder='Discount' class="form-control disc text-dark bg-light" step="0.00" min="0"style="width: 90px;" />
                 </td>
 
                 <td style="width: 11%;">
@@ -616,8 +616,8 @@
           <div class="row container-fluid p-2 m-0" id="tax_amount">
             <div class="col-sm-5 mt-2"><label for="a" class="text-center">Tax Amount</label></div>
             <div class="col-sm-3 mt-2"></div>
-            <div class="col-sm-4 mt-2"><input type="number" id="total_taxamount" name="total_taxamount"step="0.00" min="0" placeholder=0 
-                class="total_taxamount form-control text-dark bg-light"  style="background-color: #2A3038;border: 1px solid #2c2e33;"/>
+            <div class="col-sm-4 mt-2"><input type="number" id="total_taxamount" name="total_taxamount"step="0.00" min="0" placeholder=0 value="0"
+                class="total_taxamount form-control text-dark bg-light" readonly  style="background-color: #2A3038;border: 1px solid #2c2e33;"/>
             </div>
           </div>
 
@@ -638,7 +638,7 @@
             <div class="col-sm-3 mt-2">
             </div>
             <div class="col-sm-4 mt-2">
-              <input type="number" name='add_round_off' step="any" id="add_round_off" placeholder=0 class="form-control text-dark bg-light">
+              <input type="number" name='add_round_off' value="0" step="any" id="add_round_off" placeholder=0 class="form-control text-dark bg-light">
             </div>
           </div><hr>
                  
@@ -2357,15 +2357,14 @@ $(document).ready(function() {
                 $("#vsrcofsupply_row").addClass('d-flex');
                 
 
-                $('#email_inp').val(" " +data.vendor_email);
-                $('#gstin_inp').val(" " +data.gst_number);
-                $('#gst_trt_inp').val(" "+data.gst_treatment);  
-                $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected");
-                srcofsupply(); 
+                $('#email_inp').val(data.vendor_email);
+                $('#gstin_inp').val(data.gst_number);
+                $('#gst_trt_inp').val(data.gst_treatment);  
+                $("#vsrcofsupply").val(data.source_supply.replace('-',' ')).attr("selected","selected"); 
               if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
@@ -2376,7 +2375,7 @@ $(document).ready(function() {
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 $("#gstin_row").removeClass('d-none');
                 $("#gstin_row").addClass('d-flex');
-                $('#gstin_inp').val(' '+ data.gst_number);
+                $('#gstin_inp').val(data.gst_number);
               }
               
               else{
@@ -2420,26 +2419,25 @@ $(document).ready(function() {
               $("#c_sou_supply_row").addClass('d-flex');
 
 
-              $('#cemail_inp').val(' '+ data.customer_email);
-              $('#srcofsupply').val(' '+ data.cust_place_supply);
-              $('#cgst_trt_inp').val(' ' +data.gst_treatment);
-              $('#cgstin_inp').val(" " +data.gstin);
-              srcofsupply(); 
+              $('#cemail_inp').val(data.customer_email);
+              $('#srcofsupply').val(data.cust_place_supply);
+              $('#cgst_trt_inp').val(data.gst_treatment);
+              $('#cgstin_inp').val(data.gstin); 
               if( data.gst_treatment == 'Registered Business-Regular Business that is registered under GST'){
                 $("#cgstin_row").removeClass('d-none');
                 $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(data.gstin);
 
               }
               else if( data.gst_treatment == 'Registered Business-Composition Business that is registered under the Composition scheme in GST'){
                 $("#cgstin_row").removeClass('d-none');
                 $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(data.gstin);
               }
               else if( data.gst_treatment == 'Overseas- Persons with who you do import or exports of supplies outside india'){
                 $("#cgstin_row").removeClass('d-none');
                 $("#cgstin_row").addClass('d-flex');
-                $('#cgstin_inp').val(' '+ data.gstin);
+                $('#cgstin_inp').val(data.gstin);
               }
               
               else{
@@ -2513,7 +2511,7 @@ $(document).ready(function() {
           </td>
             
           <td style="width: 11%;">
-            <input type="text" name='discount[]' id="disc${roinc}" placeholder='Discount' class="form-control disc text-dark bg-light" step="0.00" min="0"/>
+            <input type="text" name='discount[]' id="disc${roinc}" placeholder='Discount' value='0' class="form-control disc text-dark bg-light" step="0.00" min="0"/>
           </td>
           <td style="width: 11%;">
             <input type="text" name='amount[]' id="amount${roinc}" placeholder='Amount' class="form-control amount text-dark bg-light" step="0.00" min="0"  />
@@ -2679,6 +2677,7 @@ $(document).ready(function() {
           
           tax_tot += tax;
           $("#igst").val(tax_tot);
+          $("#total_taxamount").val(tax_tot);
         }
       }
       else{
@@ -2687,6 +2686,7 @@ $(document).ready(function() {
         tax_tot += tax;
         $("#sgst").val(tax_tot/2);
         $("#cgst").val(tax_tot/2);
+        $("#total_taxamount").val(tax_tot);
       }
       if(ship){
         $("#grandtotal").val(amount_t+tax_tot+ship)
@@ -2779,6 +2779,7 @@ $(document).ready(function() {
               tax_tot += tax;
               // console.log(tax_tot);
               $("#igst").val(tax_tot);
+              $("#total_taxamount").val(tax_tot);
             }
           }
           else{
@@ -2787,6 +2788,7 @@ $(document).ready(function() {
             tax_tot += tax;
             $("#sgst").val(tax_tot/2);
             $("#cgst").val(tax_tot/2);
+            $("#total_taxamount").val(tax_tot);
           }
           if(ship){
             $("#grandtotal").val(amount_t+tax_tot+ship)
@@ -3504,8 +3506,7 @@ function reloadAccount() {
  
 
 
-  function showRate(id,name) { debugger
-    
+  function showRate(id,name) {  
     var n = id.slice(4);
     $.ajax({
       url: "{% url 'get_rate' %}",
@@ -3518,23 +3519,23 @@ function reloadAccount() {
       success: function(response) {
         $("#rate" +n).val(response.rate);
         $("#HSN" +n).val(response.hsn);
+        srcofsupply();
+        itemchange();
       },
     });
 
   }
 
   function srcofsupply(){ debugger
-    $(".selecttax").removeClass('d-none');
-      $(".selecttax").addClass('d-flex');
-      var st = $("#srcofsupply").val().split(" ").slice(1).join(" ").trim();
-      var st = $("#vsrcofsupply").val().split(" ").slice(1).join(" ").trim();
-      // console.log(st)
-      if( st == $("#company_state").val())
+      $(".selecttax").removeClass('d-flex');
+      $(".selecttax").addClass('d-none');
+      var custsrcofsupply = $("#srcofsupply").val().split('-')[1];  
+      if(custsrcofsupply == $("#company_state").val())
       {
         $(".tax2").removeClass('d-flex');
         $(".tax2").addClass('d-none');
-        $(".tax1").removeClass('d-flex');
-        $(".tax1").addClass('d-none');
+        $(".tax1").removeClass('d-none');
+        $(".tax1").addClass('d-flex'); 
 
         $("#cgst1").removeClass('d-none');
         $("#cgst1").addClass('d-flex');
@@ -3545,11 +3546,12 @@ function reloadAccount() {
         $("#igst1").addClass('d-none');
 
       }
-      else{
+      else{ 
+
+        $(".tax2").removeClass('d-none');
+        $(".tax2").addClass('d-flex');
         $(".tax1").removeClass('d-flex');
-        $(".tax1").addClass('d-none');
-        $(".tax2").removeClass('d-flex');
-        $(".tax2").addClass('d-none');
+        $(".tax1").addClass('d-none'); 
 
         $("#igst1").removeClass('d-none');
         $("#igst1").addClass('d-flex');
@@ -3559,9 +3561,114 @@ function reloadAccount() {
         $("#sgst1").removeClass('d-flex');
         $("#sgst1").addClass('d-none');
       }
+     
   }
+ function itemchange(){
+  
+  var row_count = $("#items-table-body tr").length;
+    var tax_tot = 0
 
-  $(document).on('change', '#srcofsupply',function(){
+    var amount_total = 0;
+    var ship = parseFloat($("#addcharge").val());
+
+    for(var i=0; i<row_count;i++){
+      var rate = $("#rate"+i).val();
+      var qnty = $("#qty" +i).val();
+      var amount = rate*qnty;
+      var disc = $("#disc" + i).val();
+
+      var tax1 = $("#intra_tax" +i).val();
+      var tax2 = $("#inter_tax" +i).val();
+
+      if (tax1 == 0){
+        if(tax2 == 0){
+          if (disc){
+            amount_disc =  amount - disc;
+            $("#amount" + i).val(amount_disc);
+             
+          }
+
+          else{
+            $("#amount" +i).val(amount);
+           }
+          tax = 0;
+          tax_tot += tax;
+        }
+        else{
+          if (disc){
+            amount_disc =  amount - disc;
+            $("#amount" + i).val(amount_disc);
+            tax =(amount_disc*(tax2/100));
+          }
+
+          else{
+            $("#amount" +i).val(amount);
+            tax =(amount*(tax2/100));
+           }
+          
+          tax_tot += tax;
+          $("#igst").val(tax_tot);
+          $("#total_taxamount").val(tax_tot);
+        }
+      }
+      else{
+        if (disc){
+            amount_disc =  amount - disc;
+            $("#amount" + i).val(amount_disc);
+            tax =(amount_disc*(tax1/100));
+          }
+
+          else{
+            $("#amount" +i).val(amount);
+            tax =(amount*(tax1/100));
+           }
+        tax = (amount*(tax1/100));
+        tax_tot += tax;
+        $("#sgst").val(tax_tot/2);
+        $("#cgst").val(tax_tot/2);
+        $("#total_taxamount").val(tax_tot);
+      }
+
+      if(ship){
+        // console.log('yea');
+        if (disc){
+          amount_disc =  amount - disc;
+          $("#amount" + i).val(amount_disc);
+          amount_total += amount_disc;
+          $("#subtotal").val(amount_total);
+          
+          $("#grandtotal").val(amount_total+ ship +tax_tot);
+        }
+
+        else{
+          $("#amount" +i).val(amount);
+          amount_total += amount;
+          $("#subtotal").val(amount_total);
+          $("#grandtotal").val(amount_total+ ship +tax_tot);
+        }
+      }
+      else{
+
+        if (disc){
+          amount_disc =  amount - disc;
+          $("#amount" +i).val(amount_disc);
+          amount_total += amount_disc;
+          $("#subtotal").val(amount_total);
+        
+          $("#grandtotal").val(amount_total+tax_tot);
+        }
+
+        else{
+          $("#amount" +i).val(amount);
+          amount_total += amount;
+          $("#subtotal").val(amount_total);
+          $("#grandtotal").val(amount_total+tax_tot);
+        }
+      }
+      
+    }  
+ }
+  $(document).on('change', '#srcofsupply',function(){ debugger
 
       $(".selecttax").removeClass('d-none');
       $(".selecttax").addClass('d-flex');
@@ -3569,10 +3676,11 @@ function reloadAccount() {
       // console.log(st)
       if( st == $("#company_state").val())
       {
-        $(".tax2").removeClass('d-flex');
-        $(".tax2").addClass('d-none');
-        $(".tax1").removeClass('d-flex');
-        $(".tax1").addClass('d-none');
+        // tax - 1 GST
+         $(".tax2").removeClass('d-flex');
+         $(".tax2").addClass('d-none');
+         $(".tax1").removeClass('d-flex');
+         $(".tax1").addClass('d-none');
 
         $("#cgst1").removeClass('d-none');
         $("#cgst1").addClass('d-flex');
@@ -3581,6 +3689,7 @@ function reloadAccount() {
 
         $("#igst1").removeClass('d-flex');
         $("#igst1").addClass('d-none');
+
 
       }
       else{
@@ -3601,20 +3710,20 @@ function reloadAccount() {
  
   $(document).on("click",".selecttax",function(){
 
-    $(".selecttax").removeClass('d-flex');
-    $(".selecttax").addClass('d-none');
+    // $(".selecttax").removeClass('d-flex');
+    // $(".selecttax").addClass('d-none');
     var st = $("#srcofsupply").val().split(" ").slice(1).join(" ").trim();
     console.log(st == $("#company_state").val())
     if(st == $("#company_state").val()){
-      $(".tax2").addClass('d-none');
-      $(".tax1").removeClass('d-none');
-      $(".tax1").addClass('d-flex');
+      // $(".tax2").addClass('d-none');
+      // $(".tax1").removeClass('d-none');
+      // $(".tax1").addClass('d-flex');
 
     }
     else{
-      $(".tax1").addClass('d-none');
-      $(".tax2").removeClass('d-none');
-      $(".tax2").addClass('d-flex');
+      // $(".tax1").addClass('d-none');
+      // $(".tax2").removeClass('d-none');
+      // $(".tax2").addClass('d-flex');
     }
 
   });
@@ -3623,7 +3732,7 @@ function reloadAccount() {
 
 
     
-  $(document).on('change','.qty',function(){
+  $(document).on('change','.qty',function(){debugger
 
     var row_count = $("#items-table-body tr").length;
     var tax_tot = 0
@@ -3668,6 +3777,7 @@ function reloadAccount() {
           
           tax_tot += tax;
           $("#igst").val(tax_tot);
+          $("#total_taxamount").val(tax_tot);
         }
       }
       else{
@@ -3685,6 +3795,7 @@ function reloadAccount() {
         tax_tot += tax;
         $("#sgst").val(tax_tot/2);
         $("#cgst").val(tax_tot/2);
+        $("#total_taxamount").val(tax_tot);
       }
 
       if(ship){
@@ -3728,7 +3839,7 @@ function reloadAccount() {
   });
 
 
-$(document).on('change','.disc',function(){
+$(document).on('change','.disc',function(){ debugger
 
   var row_count1 = $("#items-table-body tr").length;
   var amount_tot = 0;
@@ -3761,6 +3872,7 @@ $(document).on('change','.disc',function(){
           tax = amount_disc*(tax2/100);
           tax_tot1 += tax;
           $("#igst").val(tax_tot1);
+          $("#total_taxamount").val(tax_tot1);
         }
       }
       else{
@@ -3768,6 +3880,7 @@ $(document).on('change','.disc',function(){
           tax_tot1 += tax;
           $("#sgst").val(tax_tot1/2);
           $("#cgst").val(tax_tot1/2);
+          $("#total_taxamount").val(tax_tot1);
       }
       // console.log(tax)
       // console.log(tax_tot1)
@@ -3811,7 +3924,7 @@ $(document).on('change','.disc',function(){
 
       $("#sgst").val(tax_tot3/2);
       $("#cgst").val(tax_tot3/2);
-
+      $("#total_taxamount").val(tax_tot3);
 
       if(disc){
         if(ship){
@@ -3890,10 +4003,9 @@ $(document).on('change','.disc',function(){
   });
 
 
-    $(document).on("change","#addcharge",function(){
+    $(document).on("change","#addcharge",function(){ debugger
 
-      var sta = $("#srcofsupply").val().slice(4).trim();
-
+      var sta = $("#srcofsupply").val().split('-')[1]
       if(sta == $("#company_state").val()){
         var total =parseFloat( $("#subtotal").val())+ parseFloat( $("#sgst").val())+ parseFloat($("#cgst").val())+ parseFloat($("#addcharge").val());
         $("#grandtotal").val(total);
