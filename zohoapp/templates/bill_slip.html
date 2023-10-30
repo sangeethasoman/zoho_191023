@@ -331,10 +331,35 @@
                                 <div class="col-md-6">
                                     <div class="overview text-dark">
                                         <h2 class="text-dark p-2" style="text-transform: uppercase;">{{ company.company_name }}</h2>
-                                        
-                                        <h6 class="p-2" for="">Vendor Name  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:&nbsp; &nbsp;{{ bill.vendor_name }}</h6> 
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <h6 class="p-2" for="">Vendor Name</h6> 
+                                                <h6 class="p-2" for="">Vendor Email</h6> 
+                                                <h6 class="p-2" for="">Customer Name</h6>
+                                                <h6 class="p-2" for="">Customer Email</h6>
+                                                <h6 class="p-2" for="">Order Date</h6>
+                                                <h6 class="p-2" for="">Expiry Date</h6>
+                                                <h6 class="p-2" for="">Payment Method</h6>
+                                                <h6 class="p-2" for="">Repeat Every</h6>
+                                                <h6 class="p-2" for="">Payment Terms</h6>
+                                                <h6 class="p-2" for="">Total Amount</h6>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <h6 class="p-2" for="">: {{ bill.vendor_name }}</h6> <br>
+                                                <h6 class="p-2" for="">: {{ bill.vendor_email }}</h6> <br>
+                                                <h6 class="p-2" for="">: {{ bill.customer_name }}</h6><br>
+                                                <h6 class="p-2" for="">: {{ bill.customer_email }}</h6>
+                                                <h6 class="p-2" for="">: {{ bill.bill_date }}</h6>
+                                                <h6 class="p-2" for="">: {{ bill.due_date }}</h6>
+                                                <h6 class="p-2" for="">: {{ bill.payment_method }}</h6><br>
+                                                <h6 class="p-2" for="">: {{ bill.repeat_every }}</h6><br>
+                                                <h6 class="p-2" for="">: {{ bill.payment_terms }}</h6><br>
+                                                <h6 class="p-2" for="">: {{ bill.total }}</h6>
+
+                                            </div>
+                                        <!-- <h6 class="p-2" for="">Vendor Name  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:&nbsp; &nbsp;{{ bill.vendor_name }}</h6> 
                                         <h6 class="p-2" for="">Vendor Email  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:&nbsp; &nbsp;{{ bill.vendor_email }}</h6> 
-                                        <h6 class="p-2" for="">Customer Name :&nbsp; &nbsp;{{ bill.customer_name }}</h6>
+                                        <h6 class="p-2" for="">Customer Name  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:&nbsp; &nbsp;{{ bill.customer_name }}</h6>
                                         <h6 class="p-2" for="">Customer Email  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:&nbsp; &nbsp;{{ bill.customer_email }}</h6>
                                         <h6 class="p-2" for="">Order Date  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;{{ bill.bill_date }}</h6>
                                         <h6 class="p-2" for="">Expiry Date  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;{{ bill.due_date }}</h6>
@@ -342,13 +367,63 @@
                                         <h6 class="p-2" for="">Repeat Every  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;{{ bill.repeat_every }}</h6>
                                         <h6 class="p-2" for="">Payment Terms  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;{{ bill.payment_terms }}</h6>
                                         
-                                        <h6 class="p-2" for="">Total Amount &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; &nbsp;{{ bill.total }}</h6>
+                                        <h6 class="p-2" for="">Total Amount &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; &nbsp;{{ bill.total }}</h6> -->
+                                       
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h2 class="p-2 text-dark mt-4" for=""></h2>
                                     <div class=" rounded p-2" style="background-color: #555;">
-                                        <h6 class="p-2" for="">Bill No  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;{{ bill.bill_no }}</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                        <h6 class="p-2" for="">Bill No</h6>
+                                        <h6 class="p-2" for="">Order No</h6>
+                                        <h6 class="p-2" for="">Sub-Total</h6> 
+                                        {% if bill.cgst != 0 %}
+                                        <h6 class="p-2" for="">CGST</h6>
+                                        {% endif %}
+                                        {% if bill.sgst != 0 %}
+                                        <h6 class="p-2" for="">SGST</h6>
+                                        {% endif %}
+                                        {% if bill.igst != 0 %}
+                                        <h6 class="p-2" for="">IGST</h6>
+                                        {% endif %}
+                                        {% if bill.shipping_charge != 0 %}
+                                        <h6 class="p-2" for="">Shipping Charge</h6>
+                                        {% endif %}
+                                        {% if bill.adjustment != 0 %}
+                                        <h6 class="p-2" for="">Adjustment</h6>
+                                        {% endif %}
+                                        <h6 class="p-2" for="">Total</h6>
+                                    </div>
+                                
+                                        
+                                            <div class="col-md-6">
+                                                <h6 class="p-2">: {{ bill.bill_no }}</h6>  
+                                                <h6 class="p-2">: {{ bill.order_number }}</h6>
+                                                <h6 class="p-2">: {{ bill.sub_total|floatformat:3}}</h6>
+                                                {% if bill.cgst != 0 %}
+                                                <h6 class="p-2">: {{ bill.cgst|floatformat:3}}</h6>
+                                                {% endif %}
+                                                {% if bill.sgst != 0 %}
+                                                <h6 class="p-2">: {{ bill.sgst|floatformat:3}}</h6>
+                                                {% endif %}
+                                                {% if bill.igst != 0 %}
+                                                <h6 class="p-2">: {{ bill.igst|floatformat:3}}</h6>
+                                                {% endif %}
+                                                {% if bill.shipping_charge != 0 %}
+                                                <h6 class="p-2">: {{ bill.shipping_charge|floatformat:3}}</h6>
+                                                {% endif %}
+                                                <br>
+                                                {% if bill.adjustment != 0 %}
+                                                <h6 class="p-2">: {{ bill.adjustment|floatformat:3}}</h6>
+                                                {% endif %}
+                                                <h6 class="p-2">: {{ bill.total|floatformat:3}}</h6>
+
+                                            </div>
+                                        </div>
+                                        <!-- <h6 class="p-2" for="">Bill No  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp; &nbsp;{{ bill.bill_no }}</h6>
                                         <h6 class="p-2" for="">Order No &nbsp;&nbsp;&nbsp;&nbsp; :&nbsp; &nbsp;{{ bill.order_number }}</h6>
                                         <h6 class="p-2" for="">Sub-Total  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;:&nbsp; &nbsp;{{ bill.sub_total|floatformat:3}}</h6> 
                                         {% if bill.cgst != 0 %}
@@ -363,13 +438,13 @@
                                         {% if bill.shipping_charge != 0 %}
                                         <h6 class="p-2" for="">Shipping Charge &nbsp;&nbsp; : {{ bill.shipping_charge|floatformat:3}}</h6>
                                         {% endif %}
-                                        <!-- {% if items.discount != 0 %}
+                                        {% if items.discount != 0 %}
                                         <h6 class="p-2" for="">Discount &nbsp;&nbsp;&nbsp;&nbsp; : {{ items.discount|floatformat:3}}</h6>
-                                        {% endif %} -->
+                                        {% endif %}
                                         {% if bill.adjustment != 0 %}
                                         <h6 class="p-2" for="">Adjustment &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.adjustment|floatformat:3}}</h6>
                                         {% endif %}
-                                        <h6 class="p-2" for="">Total &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.total|floatformat:3}}</h6>
+                                        <h6 class="p-2" for="">Total &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.total|floatformat:3}}</h6> -->
                                         <!-- <h6 class="p-2" for="">Paid &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.amt_paid|floatformat:3}}</h6>
                                         <h6 class="p-2" for="">Balance &nbsp;&nbsp;&nbsp;&nbsp; : {{ bill.balance|floatformat:3}}</h6> -->
                                     </div>
@@ -388,15 +463,28 @@
                                         <h6 class="text-dark">{{ company.city }},{{ company.state }}</h6>
                                     </div>
                                     <div class="col-md-6 " style="text-align: right;">
-                                        <h1 class="text-dark" style="font-size: 2.5rem; ">BILL</h1>
-                                        <h6 class="text-dark">BILL Number : {{bill.bill_no }}</h6>
-                                        <h6 class="text-dark ">Order Date : {{ bill.bill_date|date:'d/m/Y' }}</h6>
-                                        <h6 class="text-dark ">Expiry Date : {{ bill.due_date|date:'d/m/Y' }}</h6>
-                                        <h6 class="text-dark ">Payment Method : {{ bill.payment_method }}</h6>
-                                        <h6 class="text-dark ">Repeat Every : {{ bill.repeat_every }}</h6>
-                                        <h6 class="text-dark ">Payment Terms : {{ bill.payment_terms }}</h6>
-                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                        <br><br>
+                                        <h6 class="text-dark pt-2"style="text-align: left;">BILL Number</h6>
+                                        <h6 class="text-dark "style="text-align: left;">Order Date</h6>
+                                        <h6 class="text-dark "style="text-align: left;">Expiry Date</h6>
+                                        <h6 class="text-dark "style="text-align: left;">Payment Method</h6>
+                                        <h6 class="text-dark "style="text-align: left;">Repeat Every</h6>
+                                        <h6 class="text-dark "style="text-align: left;">Payment Terms</h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h1 class="text-dark" style="font-size: 2.5rem;">BILL</h1>
+                                            <h6 class="text-dark "style="text-align: left;">:{{bill.bill_no }}</h6>
+                                            <h6 class="text-dark "style="text-align: left;">:{{ bill.bill_date|date:'d/m/Y' }}</h6>
+                                            <h6 class="text-dark "style="text-align: left;">:{{ bill.due_date|date:'d/m/Y' }}</h6>
+                                            <h6 class="text-dark "style="text-align: left;">: {{ bill.payment_method }}</h6>
+                                            <h6 class="text-dark pt-2 "style="text-align: left;">: {{ bill.repeat_every }}</h6>
+                                            <h6 class="text-dark pt-2 "style="text-align: left;">: {{ bill.payment_terms }}</h6>
+                                            </div>
+                                        </div>
                                     </div>
+                                    
                                 </div>
                                 <hr>
                                 <div class="row ">

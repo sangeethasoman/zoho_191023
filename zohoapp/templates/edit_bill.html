@@ -231,7 +231,7 @@ else{
                     </a>
                 </div>
             </div>
-            <div class="row mb-4  ">
+            <div class="row mb-4  vendor_email_row">
                 <div class="col-sm-2"><label for="vendor_email">Email</label></div>
                 <div class="col-sm-10"><input type="email" id="vendor_email" name="vendor_email"
                         class="form-control bg-white text-dark" style="width: 50%;" value="{{bill.vendor_email}}">
@@ -346,14 +346,14 @@ else{
               </div>
           </div>
         </div>
-          <div class="row mb-4   ">
+          <div class="row mb-4   " id="customer_email_row">
               <div class="col-sm-2"><label for="customer_email">Email</label></div>
               <div class="col-sm-10"><input type="email" id="customer_email" name="customer_email"
                       class="form-control bg-white text-dark" style="width: 50%;" value="{{bill.customer_email}}">
 
               </div>
           </div>
-          <div class="row mb-4   ">
+          <div class="row mb-4   " id="pos_row">
               <div class="col-sm-2"><label for="customer_pos">Place Of Supply</label></div>
               <div class="col-sm-10"><input type="text" id="pos" name="pos" class="form-control bg-white text-dark"
                       style="width: 50%;" value="{{bill.place_of_supply}}">
@@ -2247,10 +2247,10 @@ select = $('#customer_sel').val();
 
                     $("#cgst_trt_row").removeClass('d-none');
                     $("#cgst_trt_row").addClass('d-flex');
-                    $("#pos").removeClass('d-none');
-                    $("#pos").addClass('d-flex');
-                    $("#customer_email").removeClass('d-none');
-                    $("#customer_email").addClass('d-flex');
+                    $("#pos_row").removeClass('d-none');
+                    $("#pos_row").addClass('d-flex');
+                    $("#customer_email_row").removeClass('d-none');
+                    $("#customer_email_row").addClass('d-flex');
                     $("#cgstin_row").removeClass('d-none');
                     $("#cgstin_row").addClass('d-flex');
 
@@ -2385,8 +2385,8 @@ $(document).ready(function () {
                     $("#gstin_row").addClass('d-flex');
                     $("#sos_row").removeClass('d-none');
                     $("#sos_row").addClass('d-flex');
-                    $("#vendor_email").removeClass('d-none');
-                    $("#vendor_email").addClass('d-flex');
+                    $("#vendor_email_row").removeClass('d-none');
+                    $("#vendor_email_row").addClass('d-flex');
 
 
                     document.getElementById('vendor_email').value = email
@@ -4455,7 +4455,21 @@ $.ajax({
             dateInput.disabled = false;
         }
     }
-  
+
+    $(document).ready(function() {
+    $('#p_terms').change(function() {
+      var va = $(this).val();
+      var checkbox = $('#never-expire-checkbox')[0];
+      if (va == 'recpt'){
+        checkbox.checked = true;
+        $('#due_date')[0].disabled = true;
+      }
+      else{
+        checkbox.checked = false;
+        $('#due_date').disabled = false;
+      }
+      });
+  });
   </script>
   <!-- <script>
      $(document).on("change", "#add_round_off", function(){

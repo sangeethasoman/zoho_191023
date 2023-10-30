@@ -197,7 +197,7 @@
                     </a>
                 </div>
             </div>
-            <div class="row mb-4  ">
+            <div class="row mb-4  d-none " id="vendor_email_row">
                 <div class="col-sm-2"><label for="vendor_email">Email</label></div>
                 <div class="col-sm-10"><input type="email" id="vendor_email" name="vendor_email"
                         class="form-control bg-white text-dark" style="width: 50%;">
@@ -316,7 +316,7 @@
                   </a>
               </div>
           </div>
-          <div class="row mb-4   ">
+          <div class="row mb-4  d-none " id="customer_email_row">
               <div class="col-sm-2"><label for="customer_email">Email</label></div>
               <div class="col-sm-10"><input type="email" id="customer_email" name="customer_email"
                       class="form-control bg-white text-dark" style="width: 50%;">
@@ -340,7 +340,7 @@
               <input type="text" class="form-control text-dark bg-light"  id="cgstin_inp" name="cgstin_inp"style="width: 50%;" >
             </div>
           </div>
-          <div class="row mb-4 pt-2">
+          <div class="row mb-4 pt-2 d-none" id="pos_row" >
               <div class="col-sm-2"><label for="customer_pos">Place Of Supply</label></div>
               <div class="col-sm-10"><input type="text" id="pos" name="pos" class="form-control bg-white text-dark"
                       style="width: 50%;">
@@ -367,7 +367,7 @@
                 </label>
             </div>
             <label for="">Price List</label><br>
-            <table class="table  text-black" id="item_table" style="background-color: rgba(250, 227, 198, 0.8);display: block;overflow-x: auto;"
+            <table class="table  text-black" id="item_table" style="background-color: rgba(250, 227, 198, 0.8);display: block;"
                 onchange="calc()">
                 <thead>
                     <tr>
@@ -2406,10 +2406,10 @@
 
                     $("#cgst_trt_row").removeClass('d-none');
                     $("#cgst_trt_row").addClass('d-flex');
-                    $("#pos").removeClass('d-none');
-                    $("#pos").addClass('d-flex');
-                    $("#customer_email").removeClass('d-none');
-                    $("#customer_email").addClass('d-flex');
+                    $("#pos_row").removeClass('d-none');
+                    $("#pos_row").addClass('d-flex');
+                    $("#customer_email_row").removeClass('d-none');
+                    $("#customer_email_row").addClass('d-flex');
                     $("#cgstin_row").removeClass('d-none');
                     $("#cgstin_row").addClass('d-flex');
 
@@ -2477,8 +2477,8 @@
                     $("#gstin_row").addClass('d-flex');
                     $("#sos_row").removeClass('d-none');
                     $("#sos_row").addClass('d-flex');
-                    $("#vendor_email").removeClass('d-none');
-                    $("#vendor_email").addClass('d-flex');
+                    $("#vendor_email_row").removeClass('d-none');
+                    $("#vendor_email_row").addClass('d-flex');
 
 
                     document.getElementById('vendor_email').value = email
@@ -2527,6 +2527,7 @@
     var billDateInput = document.getElementById("bill_date");
     var dueDateInput = document.getElementById("due_date");
 
+     
     // Add an event listener to the payment terms select element
     var paymentTermsSelect = document.getElementById("p_terms");
     paymentTermsSelect.addEventListener("change", function () {
@@ -4534,6 +4535,21 @@ function toggleDateInput() {
           dateInput.disabled = false;
       }
   }
+
+  $(document).ready(function() {
+    $('#p_terms').change(function() {
+      var va = $(this).val();
+      var checkbox = $('#never-expire-checkbox')[0];
+      if (va == 'recpt'){
+        checkbox.checked = true;
+        $('#due_date')[0].disabled = true;
+      }
+      else{
+        checkbox.checked = false;
+        $('#due_date').disabled = false;
+      }
+      });
+  });
 
 </script>
 <script>
