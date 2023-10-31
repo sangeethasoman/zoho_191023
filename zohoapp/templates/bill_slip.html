@@ -353,7 +353,7 @@
                                                 <h6 class="p-2" for="">: {{ bill.due_date }}</h6>
                                                 <h6 class="p-2" for="">: {{ bill.payment_method }}</h6><br>
                                                 <h6 class="p-2" for="">: {{ bill.repeat_every }}</h6><br>
-                                                <h6 class="p-2" for="">: {{ bill.payment_terms }}</h6><br>
+                                                <h6 class="p-2" for="">: NET {{ bill.payment_terms }}</h6><br>
                                                 <h6 class="p-2" for="">: {{ bill.total }}</h6>
 
                                             </div>
@@ -389,6 +389,9 @@
                                         {% if bill.igst != 0 %}
                                         <h6 class="p-2" for="">IGST</h6>
                                         {% endif %}
+                                        {% if bill.tax_amount != 0 %}
+                                        <h6 class="p-2" for="">Tax Amount</h6>
+                                        {% endif %}
                                         {% if bill.shipping_charge != 0 %}
                                         <h6 class="p-2" for="">Shipping Charge</h6>
                                         {% endif %}
@@ -411,6 +414,9 @@
                                                 {% endif %}
                                                 {% if bill.igst != 0 %}
                                                 <h6 class="p-2">: {{ bill.igst|floatformat:3}}</h6>
+                                                {% endif %}
+                                                {% if bill.tax_amount != 0 %}
+                                                <h6 class="p-2" for="">: {{ bill.tax_amount|floatformat:3}}</h6>
                                                 {% endif %}
                                                 {% if bill.shipping_charge != 0 %}
                                                 <h6 class="p-2">: {{ bill.shipping_charge|floatformat:3}}</h6>
@@ -480,7 +486,7 @@
                                             <h6 class="text-dark "style="text-align: left;">:{{ bill.due_date|date:'d/m/Y' }}</h6>
                                             <h6 class="text-dark "style="text-align: left;">: {{ bill.payment_method }}</h6>
                                             <h6 class="text-dark pt-2 "style="text-align: left;">: {{ bill.repeat_every }}</h6>
-                                            <h6 class="text-dark pt-2 "style="text-align: left;">: {{ bill.payment_terms }}</h6>
+                                            <h6 class="text-dark pt-2 "style="text-align: left;">: NET {{ bill.payment_terms }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -493,7 +499,7 @@
                                         <h6 class="text-dark">{{ bill.vendor_name }}</h6>
                                         <h6 class="text-dark">{{ bill.vendor_email }}</h6>
                                     </div>
-                                    <div class="col-md-3  mt-auto" style="text-align: right;">
+                                    <div class="col-md-3  mt-auto" style="text-align: left;">
                                         <h6 class="text-dark">Deliver To:</h6>
                                         <h6 class="text-dark ">{{ bill.customer_name }}</h6>
                                         <h6 class="text-dark">{{ bill.customer_email }}</h6>
@@ -550,6 +556,13 @@
 
                                         <td class="text-right">IGST:</td>
                                         <td class="text-right">{{ bill.igst|floatformat:2}}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if bill.tax_amount != 0 %}
+                                    <tr style="text-align: right;">
+
+                                        <td class="text-right">Tax Amount:</td>
+                                        <td class="text-right">{{ bill.tax_amount|floatformat:2}}</td>
                                     </tr>
                                     {% endif %}
                                     {% if bill.shipping_charge != 0 %}

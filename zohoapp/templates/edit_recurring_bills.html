@@ -240,21 +240,28 @@
 
       <div class="row mt-2">
         <div class="col-md-3">
-          <label for="date2">Payment Terms</label>
+          <label for="date2">Payment Terms {{recur_bills.payment_terms}}</label>
         </div>
         <div class="col-md-6">
           <div class="d-flex">
             <select class="form-control text-dark bg-light" id="terms" required name="terms" >
-              <option selected value="{{recur_bills.payment_terms}}">NET {{recur_bills.payment_terms }}</option>
+              <option selected value="{{recur_bills.payment_terms}}">
+                
+                {% if recur_bills.payment_terms == "recpt" %}
+                Due on receipt
+                {% else %}
+                        {{recur_bills.payment_terms }}
+                {% endif %}
+              </option>
               
-              <option value="30">NET 30</option>
+               <option value="30">NET 30</option>
               
               <option value="60">NET 60</option>
              
              
-              <option value="recpt">Due on receipt</option>
+              <option value="recpt">Due on receipt</option>  
               {% for p in payments %}
-                <option selected value="{{p.Days}}" class="text-dark bg-light">{{p.Terms}}</option>
+                <option  value="{{p.Days}}" class="text-dark bg-light">{{p.Terms}}</option>
               {% endfor %}
               
             </select>

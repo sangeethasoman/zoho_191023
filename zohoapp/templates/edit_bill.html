@@ -110,8 +110,11 @@
     function test() {
         // console.log('test');
         d = 0;
-        var pos = document.getElementById("pos").value;
-        var sos = document.getElementById("sos").value;
+        // var pos = document.getElementById("pos").value;
+        // var sos = document.getElementById("sos").value;
+
+        var pos = document.getElementById("pos").value.split("-")[1];
+        var sos = document.getElementById("state").value;
 
         if (pos == sos) {
             // console.log(pos);
@@ -306,17 +309,24 @@ else{
                 </div>
                 
             </div>
-            <div class="row pt-4">
+            <div class="row pt-4">  
             <div class="col-sm-2 "><label class="text-right">Payment Terms</label></div>
                 <div class="col-sm-5 d-flex align-items-center"> <select id="p_terms" name="p_terms"
                         class="form-control bg-white text-dark" style="width: 80%;">
-                        <option id="crt_term" value="{{bill.payment_terms}}" selected>{{bill.payment_terms}}</option>
+                        <option id="crt_term" value="{{bill.payment_terms}}" selected> 
+                        
+                        {% if bill.payment_terms == "recpt" %}
+                          Due On Receipt
+                        {% else %}
+                        {{bill.payment_terms}}
+                        {% endif %}
+                      </option>
                        
                        
                         <option value="30">Net 30</option>
                         
                         <option value="60">Net 60</option>
-                        <option value="0">Due On Receipt</option>
+                        <option value="recpt">Due On Receipt</option>
                         {% for t in terms %}
                         <option value="{{t.Days}}">{{t.Terms}}</option>
                         {% endfor%}
@@ -440,8 +450,9 @@ else{
                         <td class='text-right'> <select name='tax[]' id='tax{{ forloop.counter }}' style="width: 80px;"
                           class='bg-transparent border-0 text-black text-right tax'
                           onclick='handleTaxChange({{ forloop.counter }})'>
-                                <option value="{{item.tax_percentage}}" selected>{{item.tax_percentage}}% </option>
-                                <optgroup label="GST" >
+                          
+                                <option value="{{item.tax_percentage}}"  id="taxType" selected>{{item.tax_percentage}}%</option> 
+                                <optgroup label="GST" style="display: none;">
                                   <option value=0>0% GST</option>
                                   <option value=3>3% GST</option>
                                   <option value=5>5% GST</option>
@@ -449,7 +460,7 @@ else{
                                   <option value=18>18% GST</option>
                                   <option value=28>28% GST</option>
                               </optgroup>
-                              <optgroup label="IGST" >
+                              <optgroup label="IGST"  style="display: none;">
                                   <option value=0>0% IGST</option>
                                   <option value=3>3% IGST</option>
                                   <option value=5>5% IGST</option>
@@ -1421,7 +1432,7 @@ else{
               <div class="col-md-6 mt-2">
                 <div class="d-flex">
                   <select class="form-control text-dark bg-light" id="v_terms" name="v_terms" required>
-                    <option selected id="crt_term"></option>
+                    <option selected id="crt_term"></option> 
                     <option value="30">NET 30</option>
                     
                     <option value="60">NET 60</option>
@@ -2282,17 +2293,39 @@ select = $('#customer_sel').val();
                 // gst or igst in tax
 
               $("#cust_state").val(response.state);
-
-                
-                    
+   debugger 
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
+                     if (pos === sos) {
+                           $('#tax1 optgroup[label="GST"]').show();
+                           $('#tax1 optgroup[label="IGST"]').hide(); 
+                       } else {
+                           $('#tax1 optgroup[label="GST"]').hide();
+                           $('#tax1 optgroup[label="IGST"]').show();  
+                       }
+                      
                 }
 
             });
 
-
+           
 });
 
-
+document.addEventListener("DOMContentLoaded", function() { debugger
+                        var pos = document.getElementById("pos").value.split("-")[1];
+                        var sos = document.getElementById("state").value;
+                        if (pos === sos) {
+                           $('#tax1 optgroup[label="GST"]').show();
+                           $('#tax1 optgroup[label="IGST"]').hide(); 
+                           a =  $("#taxType").text()
+                           $("#taxType").text(a +" GST");
+                       } else {
+                           $('#tax1 optgroup[label="GST"]').hide();
+                           $('#tax1 optgroup[label="IGST"]').show();  
+                           a =  $("#taxType").text()
+                           $("#taxType").text(a +" IGST");
+                       }  
+                     });
     $(document).ready(function () {
         $('#customer_sel').on('change', function () {
             select = $('#customer_sel').val();
@@ -3463,8 +3496,10 @@ $.ajax({
 
                     document.getElementById('rate1').value = rate
                     document.getElementById('HSN1').value = response.hsn
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3498,8 +3533,10 @@ $.ajax({
                     document.getElementById('rate2').value = rate;
                     document.getElementById('HSN2').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3533,8 +3570,10 @@ $.ajax({
                     document.getElementById('rate3').value = rate;
                     document.getElementById('HSN3').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3568,8 +3607,10 @@ $.ajax({
                     document.getElementById('rate4').value = rate;
                     document.getElementById('HSN4').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3603,8 +3644,10 @@ $.ajax({
                     document.getElementById('rate5').value = rate;
                     document.getElementById('HSN5').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3638,8 +3681,10 @@ $.ajax({
                     document.getElementById('rate6').value = rate;
                     document.getElementById('HSN6').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3673,8 +3718,10 @@ $.ajax({
                     document.getElementById('rate7').value = rate;
                     document.getElementById('HSN7').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3708,8 +3755,10 @@ $.ajax({
                     document.getElementById('rate8').value = rate;
                     document.getElementById('HSN8').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3743,8 +3792,10 @@ $.ajax({
                     document.getElementById('rate9').value = rate;
                     document.getElementById('HSN9').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3778,8 +3829,10 @@ $.ajax({
                     document.getElementById('rate10').value = rate;
                     document.getElementById('HSN10').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3816,8 +3869,10 @@ $.ajax({
                     document.getElementById('rate11').value = rate;
                     document.getElementById('HSN11').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3854,8 +3909,10 @@ $.ajax({
                     document.getElementById('rate12').value = rate;
                     document.getElementById('HSN12').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3892,8 +3949,10 @@ $.ajax({
                     document.getElementById('rate13').value = rate;
                     document.getElementById('HSN13').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3930,8 +3989,10 @@ $.ajax({
                     document.getElementById('rate14').value = rate;
                     document.getElementById('HSN14').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -3968,8 +4029,10 @@ $.ajax({
                     document.getElementById('rate15').value = rate;
                     document.getElementById('HSN15').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4006,8 +4069,10 @@ $.ajax({
                     document.getElementById('rate16').value = rate;
                     document.getElementById('HSN16').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4044,8 +4109,10 @@ $.ajax({
                     document.getElementById('rate17').value = rate;
                     document.getElementById('HSN17').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4082,8 +4149,10 @@ $.ajax({
                     document.getElementById('rate18').value = rate;
                     document.getElementById('HSN18').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4120,8 +4189,10 @@ $.ajax({
                     document.getElementById('rate19').value = rate;
                     document.getElementById('HSN19').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4158,8 +4229,10 @@ $.ajax({
                     document.getElementById('rate20').value = rate;
                     document.getElementById('HSN20').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4196,8 +4269,10 @@ $.ajax({
                     document.getElementById('rate21').value = rate;
                     document.getElementById('HSN21').value = response.hsn
 
-                    var pos = document.getElementById("pos").value;
-                    var sos = document.getElementById("sos").value;
+                    // var pos = document.getElementById("pos").value;
+                    // var sos = document.getElementById("sos").value;
+                    var pos = document.getElementById("pos").value.split("-")[1];
+                    var sos = document.getElementById("state").value;
 
                     $(document).ready(function() {
                        if (pos === sos) {
@@ -4266,8 +4341,11 @@ $.ajax({
 </script>
 <script>
  function handleTaxChange(selectId) {
-        var pos = $("#pos").val();
-        var sos = $("#sos").val();
+        // var pos = $("#pos").val();
+        // var sos = $("#sos").val();
+        var pos = $("#pos").val().value.split("-")[1];
+        var sos = $("#state").val();
+         
         
         if (pos === sos) {
             $(`#tax${selectId} optgroup[label="GST"]`).show();

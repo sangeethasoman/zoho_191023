@@ -449,10 +449,10 @@
 
                                 </div>
                                 <div class="position-relative">
-                                    <p>Bill No : &nbsp <span style="color: black;">{{recur_bill.bill_no}}</span></p>
-                                    <p>Bill Date : &nbsp <span style="color: black;">{{recur_bill.start_date|date:'d-m-Y'}}</span></p>
-                                    <p>Due Date : &nbsp <span style="color: black;">{{recur_bill.end_date|date:'d-m-Y'}}</span></p>
-                                    <p>Term : &nbsp <span style="color: black;">NET {{recur_bill.payment_terms}}</span></p> 
+                                    <p>Bill No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: black;">: {{recur_bill.bill_no}}</span></p>
+                                    <p>Bill Date&nbsp;&nbsp;<span style="color: black;">: {{recur_bill.start_date|date:'d-m-Y'}}</span></p>
+                                    <p>Due Date&nbsp;<span style="color: black;">: {{recur_bill.end_date|date:'d-m-Y'}}</span></p>
+                                    <p>Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: black;">: NET {{recur_bill.payment_terms}}</span></p> 
                                 </div>
                             </div>
                         </section>
@@ -536,50 +536,56 @@
 
                 <section class="balance-info p-5">
                     <div class="row">
-                        <div class="col-8 btn-group">
+                        <div class="col-6 btn-group">
                             <!-- <p class="m-0 font-weight-bold" style="color: black;"> Note: </p>
                             <p class="py-0 px-5" style="color: black;">{{recur_bill.note}}</p> -->
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <table class="table border-0">
                                 <tr>
-                                    <td style="font-weight:bold">Sub Total :</td>
-                                    <td style="font-weight:bold">{{recur_bill.sub_total|floatformat:2}}</td>
+                                    <td style="font-weight:bold">Sub Total</td>
+                                    <td style="font-weight:bold">: {{recur_bill.sub_total|floatformat:2}}</td>
                                 </tr>
                                 {% if recur_bill.igst != "" %}
                                 <tr>
-                                    <td style="font-weight:bold">IGST :</td>
-                                    <td style="font-weight:bold">{% if recur_bill.igst == None %} 0 {% else %} {{recur_bill.igst|floatformat:2}} {% endif %}</td>
+                                    <td style="font-weight:bold">IGST</td>
+                                    <td style="font-weight:bold">{% if recur_bill.igst == None %} 0 {% else %} : {{recur_bill.igst|floatformat:2}} {% endif %}</td>
                                 </tr>
                                 {% endif %}
                                 {% if recur_bill.cgst != "" %}
                                 <tr>
-                                    <td style="font-weight:bold">CGST :</td>
-                                    <td style="font-weight:bold">{% if recur_bill.cgst == None %} 0 {% else %} {{recur_bill.cgst|floatformat:2}} {% endif %}</td>
+                                    <td style="font-weight:bold">CGST</td>
+                                    <td style="font-weight:bold">{% if recur_bill.cgst == None %} 0 {% else %} : {{recur_bill.cgst|floatformat:2}} {% endif %}</td>
                                 </tr>
                                 {% endif %}
                                 {% if recur_bill.sgst != "" %}
                                 <tr>
-                                    <td style="font-weight:bold">SGST:</td>
-                                    <td style="font-weight:bold">{% if recur_bill.sgst == None %} 0 {% else %} {{recur_bill.sgst|floatformat:2}} {% endif %}</td>
+                                    <td style="font-weight:bold">SGST</td>
+                                    <td style="font-weight:bold">{% if recur_bill.sgst == None %} 0 {% else %} : {{recur_bill.sgst|floatformat:2}} {% endif %}</td>
+                                </tr>
+                                {% endif %}
+                                {% if recur_bill.tax_amount != "" %}
+                                <tr>
+                                    <td style="font-weight:bold">Tax Amount</td>
+                                    <td style="font-weight:bold">: {{recur_bill.tax_amount|floatformat:2}}</td>
                                 </tr>
                                 {% endif %}
                                 {% if recur_bill.shipping_charge != "" %}
                                 <tr>
-                                    <td style="font-weight:bold">Shipping Charge:</td>
-                                    <td style="font-weight:bold">{{recur_bill.shipping_charge|floatformat:2}}</td>
+                                    <td style="font-weight:bold">Shipping Charge</td>
+                                    <td style="font-weight:bold">: {{recur_bill.shipping_charge|floatformat:2}}</td>
                                 </tr>
                                 {% endif %}
                                 {% if recur_bill.adjustment != "" %}
                                 <tr>
-                                    <td style="font-weight:bold">Adjustment:</td>
-                                    <td style="font-weight:bold">{{recur_bill.adjustment|floatformat:2}}</td>
+                                    <td style="font-weight:bold">Adjustment</td>
+                                    <td style="font-weight:bold">: {{recur_bill.adjustment|floatformat:2}}</td>
                                 </tr>
                                 {% endif %}
                                 <tfoot>
                                     <tr>
-                                        <td style="font-weight:bold">Total:</td>
-                                        <td style="font-weight:bold ;">{{recur_bill.grand_total|floatformat:2}}</td>
+                                        <td style="font-weight:bold">Total</td>
+                                        <td style="font-weight:bold ;">: {{recur_bill.grand_total|floatformat:2}}</td>
                                     </tr>
                                 
                                 <!-- {% if recur_bill.amt_paid != "" %}
@@ -606,20 +612,23 @@
                 </center>
 
                 <div class="row g-0">
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <div>
+                            <div class="row">
+                            <div class="col-7">
                             <p class="text-grey">Bill Amount</p>
-                            <div class="d-flex justify-content-between align-items-center mb-5">
+                            <div class="d-flex  align-items-center">
                                 <b>
                                     <span style=" color: #434141;">
-                                        ₹ <input type="text" value="{{ recur_bill.grand_total|floatformat:2 }}"
+                                        <input type="text" value=" ₹ {{ recur_bill.grand_total|floatformat:2 }}"
                                             class="amnt text-dark" style="font-size: 18px; color: #434141;">
                                     </span>
                                 </b>
                             </div>
-
+                            </div>
+                            <div class="col-5">
                             <p class="text-grey">Bill No:</p>
-                            <div class="d-flex justify-content-between align-items-center mb-5">
+                            <div class="d-flex  align-items-center">
                                 <b>
                                     <span style=" color: #434141;">
                                         <input type="text" value="{{ recur_bill.bill_no }}"
@@ -627,11 +636,13 @@
                                     </span>
                                 </b>
                             </div>
+                            </div>
+                            </div>
                             <hr class="my-4">
 
 
 
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey ">Profile Name </h6>
                                 </div>
@@ -640,7 +651,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey " >Repeat Every </h6>
                                 </div>
@@ -648,7 +659,7 @@
                                     <p class="mb-0" style="font-size: 18px; color: #434141;">{{ recur_bill.repeat_every }}</p>
                                 </div>
                             </div>
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">Start Date </h6>
                                 </div>
@@ -658,7 +669,7 @@
 
                             </div>
 
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
 
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">End Date</h6>
@@ -668,7 +679,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">Payment Terms</h6>
                                 </div>
@@ -677,7 +688,7 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">Payment Method</h6>
                                 </div>
@@ -686,10 +697,10 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">Tax </h6>
-                                </div>
+                                </div><br>
                                 <div class="col-md-6 mt-3">
                                     <span style="font-size: 18px; color: #434141;">{{ gst_or_igst }} - </span>
                                     {% for bi in tax %}
@@ -698,7 +709,7 @@
                                     {% endfor %}
                                 </div>
                             </div>
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex ">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">Source of Supply</h6>
                                 </div>
@@ -707,7 +718,7 @@
                                 </div>
 
                             </div>
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
+                            <div class="row mb-4 d-flex ">
                                 <div class="col-md-6 mt-3">
                                     <h6 class="mb-0 text-grey">Note</h6>
                                 </div>
@@ -719,75 +730,81 @@
                            
                         </div>
                     </div>
-                    <div class="col-md-5  " style="background-color:#8b3131; border-radius: 5px;" >
+                    <div class="col-md-6  " style="background-color:#8b3131; border-radius: 5px;" >
                         <div style="padding-left: 20px;">
-                            <div class="d-block justify-content-between mb-5">
+                            <div class="d-block">
                                 <div class="col-md-12 mt-3">
-                                    <h5 style="color: #ccc;">Vendor</h5>
-                                </div><br>
-                                <div class="col-md-12 my-0 mx-5">
-                                    <h6 class="text-capitalize" style="color: azure;">{{ vendor_name }}</h6>
+                                    <h5 style="color: #ccc; display: inline;">Vendor</h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <h6 class="text-capitalize" style="color: azure; text-align:center; display: inline;">: {{ vendor_name }}</h6>
                                 </div>
+                                
                             </div>
-                            <div class="d-block justify-content-between mb-5">
+                            <div class="d-block">
                                 <div class="col-md-12 mt-3">
-                                    <h5 style="color: #ccc;">Customer</h5>
-                                </div><br>
-                                <div class="col-md-12 my-0 mx-5">
-                                    <h6 class="text-capitalize " style="color: azure;">{{ customer_name }}
+                                    <h5 style="color: #ccc; display: inline;">Customer</h5>&nbsp;&nbsp;
+                                    <h6 class="text-capitalize " style="color: azure; display: inline;">: {{ customer_name }}
                                     </h6>
                                 </div>
+                               
                             </div>
-
                             <hr class="my-4">
 
-                            <div class="d-flex justify-content-between mb-5">
-                                <div class="col-md-5 mt-3">
+                            <div class="d-flex">
+                                <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">Subtotal</h5><br>
                                 </div>
-                                <div class="col-md-7 mt-3 mx-3">
+                                <div class="col-md-6 mt-3 mx-3">
                                     <input type="text" value="{{ recur_bill.sub_total|floatformat:2 }} INR" class="amnt"
                                         style="font-size: 16px; color: azure;" readonly>
                                 </div>
                             </div>
-                            <div class="justify-content-between mb-5 d-none" id="igst">
-                                <div class="col-md-4 mt-3">
+                            <div class="d-none" id="igst">
+                                <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">IGST</h5><br>
                                 </div>
-                                <div class="col-md-8 mt-3 mx-3">
+                                <div class="col-md-6 mt-3 mx-3">
                                     <input type="text" value="{{ recur_bill.igst|floatformat:2 }} INR" class="amnt"
                                         style="font-size: 16px; color: azure;" readonly>
                                 </div>
                             </div>
-                            <div class=" justify-content-between mb-5 d-none" id="cgst">
-                                <div class="col-md-4 mt-3">
+                            <div class="d-none" id="cgst">
+                                <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">CGST</h5><br>
                                 </div>
-                                <div class="col-md-8 mt-3 mx-3">
+                                <div class="col-md-6 mt-3 mx-3">
                                     <input type="text" value="{{ recur_bill.cgst|floatformat:2 }} INR" class="amnt"
                                         style="font-size: 16px; color: azure;" readonly>
                                 </div>
                             </div>
-                            <div class=" justify-content-between mb-5  d-none" id="sgst">
-                                <div class="col-md-4 mt-3">
+                            <div class="d-none" id="sgst">
+                                <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">SGST</h5><br>
                                 </div>
-                                <div class="col-md-8 mt-3 mx-3">
+                                <div class="col-md-6 mt-3 mx-3">
                                     <input type="text" value="{{ recur_bill.sgst|floatformat:2 }} INR" class="amnt"
                                         style="font-size: 16px; color: azure;" readonly>
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between mb-5">
-                                <div class="col-md-8 mt-3">
+                            <div class="d-flex ">
+                                <div class="col-md-6 mt-3">
+                                    <h6 style="color: #ccc;">Tax Amount</h5><br>
+                                </div>
+                                <div class="col-md-6 mt-3 mx-3">
+                                    <input type="text" value="{{ recur_bill.tax_amount }} INR" class="amnt"
+                                        style="font-size: 16px; color: azure;" readonly>
+                                </div>
+                            </div>
+                            <div class="d-flex ">
+                                <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">Shipping Charge</h5><br>
                                 </div>
-                                <div class="col-md-4 mt-3 mx-3">
+                                <div class="col-md-6 mt-3 mx-3">
                                     <input type="text" value="{{ recur_bill.shipping_charge }} INR" class="amnt"
                                         style="font-size: 16px; color: azure;" readonly>
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-between mb-5">
+                            <div class="d-flex ">
                                 <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">Adjustment</h5><br>
                                 </div>
@@ -797,7 +814,7 @@
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-between mb-5">
+                            <div class="d-flex ">
                                 <div class="col-md-6 mt-3">
                                     <h6 style="color: #ccc;">Grand Total</h5><br>
                                 </div>
