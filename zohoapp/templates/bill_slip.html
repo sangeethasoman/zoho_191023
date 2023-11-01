@@ -350,10 +350,12 @@
                                                 <h6 class="p-2" for="">: {{ bill.customer_name }}</h6><br>
                                                 <h6 class="p-2" for="">: {{ bill.customer_email }}</h6>
                                                 <h6 class="p-2" for="">: {{ bill.bill_date }}</h6>
-                                                <h6 class="p-2" for="">: {{ bill.due_date }}</h6>
+                                                <!-- <h6 class="p-2" for="">: {{ bill.due_date }}</h6> -->
+                                                <h6 class="p-2" for="">: {% if bill.due_date == null %} Due on receipt {% else %}   {{bill.due_date|date:'d-m-Y'}} {% endif %}</h6>
                                                 <h6 class="p-2" for="">: {{ bill.payment_method }}</h6><br>
                                                 <h6 class="p-2" for="">: {{ bill.repeat_every }}</h6><br>
-                                                <h6 class="p-2" for="">: NET {{ bill.payment_terms }}</h6><br>
+                                                <!-- <h6 class="p-2" for="">: NET {{ bill.payment_terms }}</h6><br> -->
+                                                <h6 class="p-2" for="">: {% if bill.due_date == null %} Due on receipt {% else %}   NET {{ bill.payment_terms }} {% endif %}</h6><br>
                                                 <h6 class="p-2" for="">: {{ bill.total }}</h6>
 
                                             </div>
@@ -470,23 +472,24 @@
                                     </div>
                                     <div class="col-md-6 " style="text-align: right;">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                         <br><br>
                                         <h6 class="text-dark pt-2"style="text-align: left;">BILL Number</h6>
                                         <h6 class="text-dark "style="text-align: left;">Order Date</h6>
                                         <h6 class="text-dark "style="text-align: left;">Expiry Date</h6>
                                         <h6 class="text-dark "style="text-align: left;">Payment Method</h6>
-                                        <h6 class="text-dark "style="text-align: left;">Repeat Every</h6>
                                         <h6 class="text-dark "style="text-align: left;">Payment Terms</h6>
+                                        <h6 class="text-dark "style="text-align: left;">Repeat Every</h6>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-9">
                                             <h1 class="text-dark" style="font-size: 2.5rem;">BILL</h1>
-                                            <h6 class="text-dark "style="text-align: left;">:{{bill.bill_no }}</h6>
-                                            <h6 class="text-dark "style="text-align: left;">:{{ bill.bill_date|date:'d/m/Y' }}</h6>
-                                            <h6 class="text-dark "style="text-align: left;">:{{ bill.due_date|date:'d/m/Y' }}</h6>
+                                            <h6 class="text-dark "style="text-align: left;">:{{bill.bill_no }}</h6><br>
+                                            <h6 class="text-dark "style="text-align: left;">:{{ bill.bill_date|date:'d/m/Y' }}</h6><br>
+                                            <!-- <h6 class="text-dark "style="text-align: left;">:{{ bill.due_date|date:'d/m/Y' }}</h6> -->
+                                            <h6 class="text-dark "style="text-align: left;">:{% if bill.due_date == null %} Due on receipt {% else %}   {{bill.due_date|date:'d/m/Y'}} {% endif %}</h6><br>
                                             <h6 class="text-dark "style="text-align: left;">: {{ bill.payment_method }}</h6>
+                                            <h6 class="text-dark pt-2 "style="text-align: left;">: {% if bill.due_date == null %} Due on receipt {% else %}   NET {{ bill.payment_terms }} {% endif %}</h6>
                                             <h6 class="text-dark pt-2 "style="text-align: left;">: {{ bill.repeat_every }}</h6>
-                                            <h6 class="text-dark pt-2 "style="text-align: left;">: NET {{ bill.payment_terms }}</h6>
                                             </div>
                                         </div>
                                     </div>

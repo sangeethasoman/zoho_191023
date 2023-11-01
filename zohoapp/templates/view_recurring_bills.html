@@ -371,7 +371,7 @@
                         data-toggle="tooltip" title="PDF"></a>
 
                         <a href="" class=" fa fa-print btns px-2 py-2"   data-toggle="tooltip"
-                            title="PRINT" onclick="window.print()"> </a>
+                            title="PRINT" onclick="printSection()"> </a>
 
                         <a href="" class="fa fa-envelope btns px-2 py-2" 
                             title="MAIL" data-toggle="modal" data-target="#emails" > </a>
@@ -417,9 +417,8 @@
             <hr class="hr">
 
 
-            <div id="Template" class=" print-only page tabcontent p-5 m-3" style="display: block; background-color:azure" class="slip m-3 p-5  bg-light" id="whatToPrint"
-            style="box-shadow: 5px 5px 10px rgb(45, 45, 45);">
-                
+            <div id="Template" class=" print-only page tabcontent p-5 m-3" style="display: block; background-color:azure" class="slip m-3 p-5  bg-light"
+            style="box-shadow: 5px 5px 10px rgb(45, 45, 45);"> 
                 <div class="ribbon">{{ recur_bill.status }}</div>
                 <div class="row pt-0 m-0 text-center">
                     <div class="col-4 "></div>
@@ -451,8 +450,10 @@
                                 <div class="position-relative">
                                     <p>Bill No&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: black;">: {{recur_bill.bill_no}}</span></p>
                                     <p>Bill Date&nbsp;&nbsp;<span style="color: black;">: {{recur_bill.start_date|date:'d-m-Y'}}</span></p>
-                                    <p>Due Date&nbsp;<span style="color: black;">: {{recur_bill.end_date|date:'d-m-Y'}}</span></p>
-                                    <p>Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: black;">: NET {{recur_bill.payment_terms}}</span></p> 
+                                    <!-- <p>Due Date&nbsp;<span style="color: black;">: {{recur_bill.end_date|date:'d-m-Y'}}</span></p> -->
+                                    <p>Due Date&nbsp;<span style="color: black;">: {% if recur_bill.end_date == null %} Due on receipt {% else %}   {{recur_bill.end_date|date:'d-m-Y'}} {% endif %}</span></p>
+                                    <!-- <p>Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: black;">: NET {{recur_bill.payment_terms}}</span></p>  -->
+                                    <p>Term&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: black;">:  {% if recur_bill.end_date == null %} Due on receipt {% else %}   NET {{ recur_bill.payment_terms }} {% endif %}</span></p> 
                                 </div>
                             </div>
                         </section>
@@ -675,7 +676,9 @@
                                     <h6 class="mb-0 text-grey">End Date</h6>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <p class="mb-0" style="font-size: 18px; color: #434141;">{{ recur_bill.end_date |date:'d-m-Y' }}</p>
+                                    <!-- <p class="mb-0" style="font-size: 18px; color: #434141;">{{ recur_bill.end_date |date:'d-m-Y' }}</p> -->
+                                    <p class="mb-0" style="font-size: 18px; color: #434141;">{% if recur_bill.end_date == null %} Due on receipt {% else %}   {{recur_bill.end_date|date:'d-m-Y'}} {% endif %}</p>
+                                    
                                 </div>
                             </div>
 
@@ -684,7 +687,8 @@
                                     <h6 class="mb-0 text-grey">Payment Terms</h6>
                                 </div>
                                 <div class="col-md-6 mt-3">
-                                    <p class="mb-0" style="font-size: 18px; color: #434141;"> NET {{ recur_bill.payment_terms }}</p>
+                                    <!-- <p class="mb-0" style="font-size: 18px; color: #434141;"> NET {{ recur_bill.payment_terms }}</p> -->
+                                    <p class="mb-0" style="font-size: 18px; color: #434141;"> {% if recur_bill.end_date == null %} Due on receipt {% else %}   NET {{ recur_bill.payment_terms }} {% endif %}</p>
                                 </div>
                             </div>
 
@@ -790,7 +794,7 @@
                                     <h6 style="color: #ccc;">Tax Amount</h5><br>
                                 </div>
                                 <div class="col-md-6 mt-3 mx-3">
-                                    <input type="text" value="{{ recur_bill.tax_amount }} INR" class="amnt"
+                                    <input type="text" value="{{ recur_bill.tax_amount|floatformat:2 }} INR" class="amnt"
                                         style="font-size: 16px; color: azure;" readonly>
                                 </div>
                             </div>
@@ -1161,10 +1165,16 @@
 $(document).ready(function () {
         console.log('print');
 
-        $(document).on('click', '.toPDF', function (event) {
+        $(document).on('click', '.toPDF', function (event) {debugger
             console.log('print1');
             event.preventDefault();
             var element = document.getElementById('Template');
+            let overview = false;
+            if($('#Overview').css('display') == 'block')
+            {   overview = true;
+                document.getElementById('Overview').style.display = "none"; 
+                document.getElementById('Template').style.display = "block"; 
+            }
             
             var opt =
             {
@@ -1173,39 +1183,20 @@ $(document).ready(function () {
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 3 },
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
-
+            }; 
+            html2pdf().set(opt).from(element).save().then((pdf) => {
+                if(overview){
+                document.getElementById('Overview').style.display = "block"; 
+                document.getElementById('Template').style.display = "none"; 
+                }
+            });
         });
 
  });
 
 </script>
+ 
 
-<script type="text/javascript">
-    $(document).ready(function ($) {
-        console.log('print');
-
-        $(document).on('click', '.btn_print', function (event) {
-            console.log('print1');
-            event.preventDefault();
-            var element = document.getElementById('whatToPrint');
-            var opt =
-            {
-                margin: 1,
-                filename: 'recurring_bill_' + '.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save();
-
-        });
-
-    });
-
-    
-</script>
 <script>
     $(document).ready(function() {
         let status = '{{ recur_bill.status }}'
@@ -1216,6 +1207,21 @@ $(document).ready(function () {
             $('.convert').show()
         }
     });
+</script> 
+
+<script>  
+    function printSection() { debugger
+    var printContents = document.getElementById('Template').innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+   
+
+    document.body.innerHTML = originalContents;
+    window.location.reload();
+}
 </script>
 
 

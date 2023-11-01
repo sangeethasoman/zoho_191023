@@ -5475,7 +5475,9 @@ def view_recurring_bills(request,id):
     comment = rec_comments.objects.filter(recur_bills_id=rbill) 
     cust = customer.objects.get(id = rbill.customer_name.split(" ")[0])
     vend = vendor_table.objects.get(id = rbill.vendor_name.split(" ")[0])
-    gst_or_igst = "GST" if company.state == (" ".join(rbill.source_supply.split(" ")[1:])) else "IGST"
+    print(cust.state)
+    print(company.state)
+    gst_or_igst = "GST" if company.state.lower() == cust.state.lower() else "IGST"
     tax_total = [] 
     for b in billitem:
         if b.tax not in tax_total: 
