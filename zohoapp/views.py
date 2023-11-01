@@ -10652,7 +10652,7 @@ def update_bills(request,pk):
         bill.bill_no = request.POST['bill_number']
         bill.order_number = request.POST['order_number']
         bill.bill_date = request.POST['bill_date']
-        bill.due_date = None if request.POST.get['due_date'] == "" else  request.POST.get['due_date']
+        bill.due_date = None if request.POST.get('due_date') == "" else  request.POST.get('due_date')
         bill.payment_terms = request.POST['p_terms']
         bill.repeat_every = request.POST['repeats']
         bill.payment_method = request.POST['paymentmethod']
@@ -17580,7 +17580,7 @@ def update_bills_save(request,pk):
         bill.bill_no = request.POST['bill_number']
         bill.order_number = request.POST['order_number']
         bill.bill_date = request.POST['bill_date']
-        bill.bill.due_date = None if request.POST.get['due_date'] == "" else  request.POST.get['due_date']
+        bill.due_date = None if request.POST.get('due_date') == "" else  request.POST.get('due_date')
         bill.payment_terms = request.POST['p_terms']
         bill.repeat_every = request.POST['repeats']
         bill.payment_method = request.POST['paymentmethod']
